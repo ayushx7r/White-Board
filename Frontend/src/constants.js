@@ -1,0 +1,18 @@
+export const TOOLS = {
+    LINE : "LINE",
+    RECT : "RECT",
+    CIRCLE : "CIRCLE",
+    ARROW : "ARROW"
+}
+
+export const TOOL_ACTIONS = {
+    SET_CURR_TOOL : "SET_CURR_TOOL",
+    SET_CURR_STATE : "SET_CURR_STATE",
+    ADD_ELEMENT : "ADD_ELEMENT",
+    DRAW_MOVE : "DRAW_MOVE"
+}
+
+export const CURR_STATE = {
+    IDLE : "idle",
+    DRAWING : "drawing"
+}

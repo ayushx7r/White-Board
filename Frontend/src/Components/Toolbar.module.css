@@ -1,0 +1,27 @@
+.container {
+    position: fixed;
+    left: 50%;
+    top: 1rem;
+    display: flex;
+    gap: 0.7rem;
+    padding: 0.3rem 0.4rem;
+    transform: translateX(-50%);
+    border-radius: 0.2rem;
+    box-shadow: 1px 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+.toolItem {
+    padding: 0rem 1.2rem;
+    cursor: pointer;
+    margin : 0.2rem 0;}
+
+.toolItem:hover {
+    background-color: #dbeafe;
+    border-radius: 0.2rem;
+}
+
+.toolItem.active {
+    background-color: #bfdbfe;
+    border-radius: 0.2rem;
+}

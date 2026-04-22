@@ -1,0 +1,31 @@
+.colors {
+    display : flex;
+    gap : 1rem;
+}
+
+.container b {
+    display : block;
+    margin : 0.7rem 0 0.5rem 0;
+}
+
+.container .colorBox {
+    padding : 0.2rem;
+    box-sizing: border-box;
+    height : 1.5rem;
+    width : 1.5rem;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.container .active {
+     border : 2px solid black;
+}
+
+.colorBox .color {
+    box-sizing: border-box;
+    height : 1rem;
+    width : 1rem;
+    border : 1px solid black;
+}

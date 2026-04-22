@@ -16,3 +16,10 @@ export const CURR_STATE = {
     IDLE : "idle",
     DRAWING : "drawing"
 }
+
+export const COLORS = {
+    BLACK : "#000",
+    YELLOW : "#ff0",
+    RED : "#f00",
+    TRANS : "#fff"
+}

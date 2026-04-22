@@ -1,12 +1,12 @@
 import { useContext } from 'react'
 import classes from './Toolbar.module.css'
-import ToolItem from './ToolItem'
-import  ToolContext from '../store/ToolContext.js'
-import BoardContext from '../store/BoardContext';
+import ToolItem from './ToolItem.jsx'
+import  ToolContext from '../../store/ToolContext.js'
+import BoardContext from '../../store/BoardContext.js';
 import { LuSlash } from "react-icons/lu";
 import { MdOutlineRectangle } from "react-icons/md";
 import { FaRegCircle, FaLongArrowAltRight } from "react-icons/fa";
-import { TOOLS } from '../constants'
+import { TOOLS } from '../../constants.js'
 
 
 const Toolbar = () => {

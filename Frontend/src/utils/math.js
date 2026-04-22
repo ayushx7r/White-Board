@@ -19,3 +19,7 @@ export const getArrowHeadCoordinates = (x1, y1, x2, y2) => {
     const headY2 = y2 - headLength * Math.sin(angle + Math.PI/6);
     return {headX1, headY1, headX2, headY2};
 };
+
+export const isClosed = (element) => {
+    return (element == "RECT" || element == "CIRCLE");
+}

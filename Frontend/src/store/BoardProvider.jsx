@@ -49,9 +49,9 @@ const BoardProvider = ({children}) => {
     const [boardState, dispatchBoardState] = useReducer(boardReducer, initialBoardState);
     const ctx = useContext(ToolContext);
     const handleMouseDown = (e) => {
-        dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.DRAWING});
-        const {clientX, clientY} = e;
-        dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : clientX, y1 : clientY, x2 : clientX, y2 : clientY}}, options : ctx[boardState.currTool]});
+      dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.DRAWING});
+      const {clientX, clientY} = e;
+      dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : clientX, y1 : clientY, x2 : clientX, y2 : clientY}}, options : ctx.state});
     }
 
     const handleMouseMove = (e) => {

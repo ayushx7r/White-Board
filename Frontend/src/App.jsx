@@ -8,11 +8,11 @@ function App() {
   
 
   return (
-    <BoardProvider>
-      <ToolProvider>
+    <ToolProvider>
+      <BoardProvider>
         <Board />
-      </ToolProvider>
-    </BoardProvider>
+      </BoardProvider>
+    </ToolProvider>
   )
 }
 

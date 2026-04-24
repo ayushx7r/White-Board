@@ -1,10 +1,11 @@
 import rough from "roughjs"
-import { getArrowHeadCoordinates } from "./math";
+import { getArrowHeadCoordinates, getSvgPathFromStroke } from "./math";
 import { TOOLS } from "../constants";
+import {getStroke} from "perfect-freehand"
 
 const generator = rough.generator();
 export const createElement = (id, x1, y1, x2, y2, type, options) => {
-    const element = {id, x1, y1, x2, y2};
+    const element = {id, x1, y1, x2, y2, type};
     const cleanOptions = {
         seed : id+1,
         strokeWidth : options.strokeWidth,
@@ -28,6 +29,24 @@ export const createElement = (id, x1, y1, x2, y2, type, options) => {
             const {headX1, headY1, headX2, headY2} = getArrowHeadCoordinates(x1, y1, x2, y2);
             element.drawable = generator.linearPath([[x1, y1], [x2, y2], [headX1, headY1], [x2, y2], [headX2, headY2]], cleanOptions);
             return element;
+        }
+        case TOOLS.BRUSH : {
+            const brushElement = {
+                id,
+                type,
+                points : [{x : x1, y : y1}],
+                path : new Path2D(getSvgPathFromStroke(getStroke([{x : x1, y : y1}], {size : options.strokeWidth*4}))),
+                options
+            }
+            return brushElement;
+        }
+        case TOOLS.ERASER : {
+            const eraserElement = {
+                id, type, points : [{x : x1, y : y1}],
+                path : new Path2D(getSvgPathFromStroke(getStroke([{x : x1, y : y1}], {size : options.strokeWidth*4}))),
+                options : {...options, stroke : "#fff"}
+            }
+            return eraserElement;
         }
     }
 }

@@ -8,7 +8,7 @@ import ToolContext from '../../store/ToolContext.js'
 const ColorPicker = ({children, handleColorChange, currColor}) => {
     const {currTool} = useContext(BoardContext);
     const handleClick = (color) => {
-        handleColorChange(color);
+        handleColorChange(color, currTool);
     }
     
   return (

@@ -4,30 +4,39 @@ import { PhotoshopPicker, SketchPicker } from 'react-color';
 import ColorPicker from '../ColorPicker/ColorPicker.jsx';
 import ToolContext from '../../store/ToolContext.js';
 import BoardContext from '../../store/BoardContext.js';
-import { isClosed } from '../../utils/math.js'
+import { hasStroke, isClosed } from '../../utils/math.js'
+import { TOOLS } from '../../constants.js';
+import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 const Toolbox = () => {
   const {state, handleStrokeColorChange, handleFillShape, handleStrokeWidthChange} = useContext(ToolContext);
+  const {currTool} = useContext(BoardContext);
+
+  
   const min = 1;
   const max = 10;
-  const percentage = ((state.strokeWidth - min) / (max - min)) * 100;
-
-  // Create a dynamic background style
+  const percentage = ((state[currTool].strokeWidth - min) / (max - min)) * 100;
   const trackStyle = {
-    background: `linear-gradient(to right, ${state.stroke} ${percentage}%, #444 ${percentage}%)`
+    background: `linear-gradient(to right, ${currTool == TOOLS.ERASER ? "#fff" : state[currTool].stroke}, ${percentage}%, #444 ${percentage}%)`
   };
-    const {currTool} = useContext(BoardContext);
+
+  const [collapsed, setCollapsed] = useState(false);
     const strokeWidthRef = useRef();
     const handleStrokeWidth = () => {
-      handleStrokeWidthChange(strokeWidthRef.current.value);
+      handleStrokeWidthChange(strokeWidthRef.current.value, currTool);
+    }
+
+    const handleCollapse = () => {
+      setCollapsed(!collapsed);
     }
   return (
-    <div className={classes.container}>
-        <ColorPicker currColor={state.stroke} handleColorChange={handleStrokeColorChange} >Stroke</ColorPicker>
-        {isClosed(currTool) && <ColorPicker currColor={state.fill} handleColorChange={handleFillShape} >Fill</ColorPicker>}
-        <p>Storke Size : {state.strokeWidth} </p>
-        <input style={trackStyle} className={classes.slider} ref={strokeWidthRef} value={state.strokeWidth} onChange={handleStrokeWidth} type='range' min={min} max={max} />
-
+    <div className={`${classes.container}  ${collapsed ? classes.collapsed : ""}`}>
+        {hasStroke(currTool) && <ColorPicker currColor={state[currTool].stroke} handleColorChange={handleStrokeColorChange} >Stroke</ColorPicker>}
+        {isClosed(currTool) && <ColorPicker currColor={state[currTool].fill} handleColorChange={handleFillShape} >Fill</ColorPicker>}
+        <p>Storke Size : {state[currTool].strokeWidth} </p>
+        <input style={trackStyle} className={classes.slider} ref={strokeWidthRef} value={state[currTool].strokeWidth} onChange={() => handleStrokeWidthChange(strokeWidthRef.current.value, currTool)} type='range' min={min} max={max} />
+        <button className={classes.collapseBtn} onClick={handleCollapse}> <FaArrowRightArrowLeft/> </button>
     </div>
   )
 }

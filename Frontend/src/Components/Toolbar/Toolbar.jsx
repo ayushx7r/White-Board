@@ -5,7 +5,8 @@ import  ToolContext from '../../store/ToolContext.js'
 import BoardContext from '../../store/BoardContext.js';
 import { LuSlash } from "react-icons/lu";
 import { MdOutlineRectangle } from "react-icons/md";
-import { FaRegCircle, FaLongArrowAltRight } from "react-icons/fa";
+import { FaRegCircle, FaLongArrowAltRight, FaEraser } from "react-icons/fa";
+import { IoIosBrush } from "react-icons/io";
 import { TOOLS } from '../../constants.js'
 
 
@@ -14,10 +15,12 @@ const Toolbar = () => {
 
   return (
     <div className={classes.container}>
+      <ToolItem className={currTool == TOOLS.BRUSH? classes.active : ""} onClick={() => handleToolChange(TOOLS.BRUSH)}><IoIosBrush/></ToolItem>
       <ToolItem className = {currTool == TOOLS.LINE ? classes.active : ""} onClick={() => handleToolChange(TOOLS.LINE)}><LuSlash/></ToolItem>
       <ToolItem className = {currTool == TOOLS.RECT ? classes.active : ""} onClick={() => handleToolChange(TOOLS.RECT)}><MdOutlineRectangle/> </ToolItem>
       <ToolItem className = {currTool == TOOLS.CIRCLE ? classes.active : ""} onClick={() => handleToolChange(TOOLS.CIRCLE)}><FaRegCircle/></ToolItem>
       <ToolItem className = {currTool == TOOLS.ARROW ? classes.active : ""} onClick={() => handleToolChange(TOOLS.ARROW)}><FaLongArrowAltRight/></ToolItem>
+      <ToolItem className = {currTool == TOOLS.ERASER ? classes.active : ""} onClick={() => handleToolChange(TOOLS.ERASER)}><FaEraser /></ToolItem>
     </div>
   )
 }

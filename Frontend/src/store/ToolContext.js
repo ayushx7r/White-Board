@@ -3,21 +3,28 @@ import { TOOLS } from '../constants';
 
 const initialState = {
     [TOOLS.LINE] : {
-        stroke : "black",
+        stroke : "#000",
         strokeWidth : 1
     },
     [TOOLS.RECT] : {
-        stroke : "black",
+        stroke : "#000",
         fill : "transparent",
         strokeWidth : 1
     },
     [TOOLS.CIRCLE] : {
-        stroke : "black",
+        stroke : "#000",
         fill : "transparent",
         strokeWidth : 1
     },
     [TOOLS.ARROW] : {
-        stroke : "black",
+        stroke : "#000",
+        strokeWidth : 1
+    },
+    [TOOLS.BRUSH] : {
+        stroke : "#000",
+        strokeWidth : 1
+    },
+    [TOOLS.ERASER] : {
         strokeWidth : 1
     }
 }

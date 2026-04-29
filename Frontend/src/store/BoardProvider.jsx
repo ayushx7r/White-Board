@@ -16,7 +16,9 @@ const initialBoardState = {
     handleMouseUp : () => {},
     currState : CURR_STATE.IDLE,
     options : {},
-    currPos : {x : 0, y : 0}
+    currPos : {x : 0, y : 0},
+    history : [[]],
+    index : 0
 }
 
 const generator = rough.generator();
@@ -35,6 +37,47 @@ function boardReducer (state, action) {
     case TOOL_ACTIONS.ADD_ELEMENT : {
       const element = createElement(state.elements.length+1, action.payload.points.x1, action.payload.points.y1, action.payload.points.x2, action.payload.points.y2, state.currTool, action.options);
       return {...state, elements : [...state.elements, element]};
+    }
+    case TOOL_ACTIONS.SNAPSHOT : {
+      const newHistory = state.history.slice(0, state.index+1);
+      newHistory.push(state.elements);
+      return {
+        ...state,
+        history : newHistory,
+        index : state.index+1
+      }
+    }
+    case TOOL_ACTIONS.DELETE_LAST : {
+      const newElements = state.elements.slice(0, state.elements.length);
+      newElements.pop();
+      return {
+        ...state, elements : newElements
+      }
+    }
+
+    case TOOL_ACTIONS.UNDO : {
+      if(state.index <= 0) return state;
+      return {
+        ...state,
+        elements : state.history[state.index-1],
+        index : state.index - 1
+      }
+    }
+    case TOOL_ACTIONS.REDO : {
+      if(state.index >= state.history.length-1) return state;
+
+      return {
+        ...state,
+        elements : state.history[state.index+1],
+        index : state.index + 1
+      }
+    }
+    case TOOL_ACTIONS.TEXT_WRITE : {
+      const newElements = [...state.elements];
+      const index = newElements.length - 1;
+      newElements[index].text = action.payload;
+
+      return {...state, elements : [...newElements]};
     }
     case TOOL_ACTIONS.DRAW_MOVE: {
       let newElements = [...state.elements];
@@ -78,18 +121,36 @@ const BoardProvider = ({children}) => {
     const ctx = useContext(ToolContext);
 
     const handleMouseDown = (e) => {
-      const {clientX, clientY} = e;
-      if(boardState.currTool == TOOLS.ERASER) {
-        dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.ERASING});
-        dispatchBoardState({type : TOOL_ACTIONS.DRAW_MOVE, payload : {x : clientX, y : clientY}});
-      }
-      else if(boardState.currTool != TOOLS.ERASER) {
-        dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.DRAWING});
-        dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : clientX, y1 : clientY, x2 : clientX, y2 : clientY}}, options : ctx.state[boardState.currTool]});
+      if(boardState.currState == CURR_STATE.WRITING) {
+        dispatchBoardState({type : TOOL_ACTIONS.SNAPSHOT});
+        return;
       } 
+      const {clientX, clientY} = e;
+      switch(boardState.currTool) {
+        case TOOLS.ERASER : {
+          dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.ERASING});
+          dispatchBoardState({type : TOOL_ACTIONS.DRAW_MOVE, payload : {x : clientX, y : clientY}});
+          break;
+        }
+        case TOOLS.TEXT : {
+          dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.WRITING});
+          dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : clientX, y1 : clientY, x2 : clientX, y2 : clientY}}, options : ctx.state[boardState.currTool]});
+          break;
+        }
+        case TOOLS.ARROW:
+        case TOOLS.BRUSH:
+        case TOOLS.CIRCLE:
+        case TOOLS.LINE:
+        case TOOLS.RECT: {
+          dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.DRAWING});
+          dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : clientX, y1 : clientY, x2 : clientX, y2 : clientY}}, options : ctx.state[boardState.currTool]});
+          break;
+        }
+      }
     }
 
     const handleMouseMove = (e) => {
+      if(boardState.currState == CURR_STATE.WRITING) return;
       const {clientX, clientY} = e;
       dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_POS, payload : {x : clientX, y : clientY}});
       if(boardState.currState == CURR_STATE.DRAWING || boardState.currState == CURR_STATE.ERASING) {
@@ -99,6 +160,8 @@ const BoardProvider = ({children}) => {
     }
 
     const handleMouseUp = () => {
+      if(boardState.currTool == TOOLS.TEXT) return;
+      dispatchBoardState({type : TOOL_ACTIONS.SNAPSHOT});
       if(boardState.currState != CURR_STATE.IDLE) {
         dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.IDLE});
       }
@@ -107,7 +170,22 @@ const BoardProvider = ({children}) => {
     const handleToolChange = (tool) => {
       dispatchBoardState({type: TOOL_ACTIONS.SET_CURR_TOOL, payload: tool});
     }
-    const data = {...boardState, handleMouseDown, handleToolChange, handleMouseMove, handleMouseUp};
+
+    const handleTextAreaBlur = (text) => {
+      dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.IDLE});
+      dispatchBoardState({type : TOOL_ACTIONS.TEXT_WRITE, payload : text});
+    }
+
+    const handleUndoButtonClick = () => {
+      dispatchBoardState({type : TOOL_ACTIONS.UNDO});
+    } 
+    
+    const handleRedoButtonClick = () => {
+      dispatchBoardState({type : TOOL_ACTIONS.REDO});
+    }
+
+
+    const data = {...boardState, handleMouseDown, handleToolChange, handleMouseMove, handleMouseUp, handleTextAreaBlur, handleUndoButtonClick, handleRedoButtonClick};
   return (
     <BoardContext.Provider value={data}>
       {children}

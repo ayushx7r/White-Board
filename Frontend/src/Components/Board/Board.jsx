@@ -3,12 +3,15 @@ import Toolbar from '../Toolbar/Toolbar.jsx'
 import BoardContext from '../../store/BoardContext'; 
 import rough from 'roughjs/bin/rough'
 import Toolbox from '../Toolbox/Toolbox';
-import { CURR_STATE, TOOLS } from '../../constants.js';
+import { CURR_STATE, TOOL_ACTIONS, TOOLS } from '../../constants.js';
 import ToolContext from '../../store/ToolContext.js';
+import classes from './Board.module.css'
+import History from '../History/History.jsx';
 
 const Board = () => {
     const canvasRef = useRef();
-    const { currTool, currPos, currState, elements, handleMouseDown, handleMouseMove, handleMouseUp } = useContext(BoardContext);
+    const textAreaRef = useRef();
+    const { currTool, currPos, currState, elements, handleMouseDown, handleMouseMove, handleMouseUp, handleTextAreaBlur } = useContext(BoardContext);
     const {state} = useContext(ToolContext);
     useLayoutEffect(() => {
       const canvas = canvasRef.current;
@@ -27,6 +30,31 @@ const Board = () => {
             case TOOLS.ERASER : {
               context.fillStyle = element.options.stroke;
               context.fill(element.path)
+              context.restore();
+              break;
+            }
+            case TOOLS.TEXT : {
+              context.save();
+              context.textBaseline = "top";
+              context.font = `${element.strokeWidth}px Caveat`;
+              context.fillStyle = element.stroke;
+
+              // 1. Split the text into an array of lines
+              const lines = element.text.split("\n");
+              
+              // 2. Define the line height (matching your textarea line-height)
+              // Since you set line-height: 1 in CSS, it matches the font size
+              const lineHeight = element.strokeWidth; 
+
+              // 3. Loop and draw each line individually
+              lines.forEach((line, index) => {
+                context.fillText(
+                  line, 
+                  element.x1, 
+                  element.y1 + (index * lineHeight)
+                );
+              });
+
               context.restore();
               break;
             }
@@ -55,11 +83,36 @@ const Board = () => {
       }
     },[elements, currPos, currState]);
 
+    useEffect(() => {
+    if (currState === CURR_STATE.WRITING && textAreaRef.current) {
+        // A timeout of 0ms pushes the focus to the next event loop tick
+        const timeout = setTimeout(() => {
+            textAreaRef.current.focus();
+        }, 0);
+        
+        return () => clearTimeout(timeout);
+    }
+}, [currState]);
+
+const handleTextChange = (e) => {
+  const textarea = e.target;
+  // Reset height and width to auto to shrink if text is deleted
+  textarea.style.width = 'auto';
+  // Set width to scrollWidth so it expands with content
+  textarea.style.width = `${textarea.scrollWidth}px`;
+  
+  // Optional: Do the same for height if you want it to grow vertically on Enter
+  textarea.style.height = 'auto';
+  textarea.style.height = `${textarea.scrollHeight}px`;
+};
+
   return (
     <>  
         <Toolbar currTool={currTool} />
         <Toolbox />
+        {currState == CURR_STATE.WRITING && <textarea onInput={handleTextChange} ref={textAreaRef} className={classes.textArea} style={{position : "absolute",top:elements[elements.length-1].y1, left: elements[elements.length-1].x1, fontSize: `${state[currTool].strokeWidth}px`, color : state[currTool].stroke}} onBlur={(e) => handleTextAreaBlur(e.target.value)}/>}
         <canvas ref={canvasRef} height={window.innerHeight} width={window.innerWidth} onPointerDown={handleMouseDown} onPointerMove={handleMouseMove} onPointerUp={handleMouseUp} style={{touchAction: "none"}}></canvas>
+        <History />
     </>
   )
 }

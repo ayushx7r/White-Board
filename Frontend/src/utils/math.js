@@ -23,11 +23,11 @@ export const getArrowHeadCoordinates = (x1, y1, x2, y2) => {
 };
 
 export const isClosed = (element) => {
-    return (element == "RECT" || element == "CIRCLE");
+    return (element == TOOLS.RECT || element == TOOLS.CIRCLE);
 }
 
 export const hasStroke = (element) => {
-  return (element != "ERASER");
+  return (element != TOOLS.ERASER);
 }
 
 const average = (a, b) => (a + b) / 2
@@ -95,13 +95,6 @@ export const checkSegmentsHit = (element, x, y, threshold) => {
             const topRight = { x: x2, y: y1 };
             const bottomLeft = { x: x1, y: y2 };
             const bottomRight = { x: x2, y: y2 };
-            if (drawable.options.fill && drawable.options.fill !== 'none' && drawable.options.fill !== 'transparent') {
-                const isInside = x >= Math.min(x1, x2) && x <= Math.max(x1, x2) && 
-                                y >= Math.min(y1, y2) && y <= Math.max(y1, y2);
-                
-                if (isInside) return true;
-            }
-
             const sides = [
                 [topLeft, topRight],
                 [topRight, bottomRight],
@@ -157,6 +150,27 @@ export const checkSegmentsHit = (element, x, y, threshold) => {
             // HIT Zone
             const tolerance = threshold / Math.max(rx, ry);
             return Math.abs(distanceRatio - 1) < tolerance;
+        }
+        case TOOLS.TEXT: {
+            const lines = element.text.split("\n");
+            const fontSize = element.strokeWidth;
+            const lineHeight = fontSize;
+            
+            const maxChars = Math.max(...lines.map(line => line.length));
+            const textWidth = maxChars * (fontSize * 0.5); 
+            const textHeight = lines.length * lineHeight;
+
+            const minX = element.x1;
+            const maxX = element.x1 + textWidth;
+            const minY = element.y1;
+            const maxY = element.y1 + textHeight;
+
+            return (
+                x >= minX &&
+                x <= maxX &&
+                y >= minY &&
+                y <= maxY
+            );
         }
 
         default:

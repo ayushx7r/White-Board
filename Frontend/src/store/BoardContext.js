@@ -9,7 +9,9 @@ const initialState = {
     handleMouseUp : () => {},
     currState : CURR_STATE.IDLE,
     options : {},
-    currPos : {x : 0, y : 0}
+    currPos : {x : 0, y : 0},
+    history : [[]],
+    index : 0
 }
 
 const BoardContext = createContext(initialState);

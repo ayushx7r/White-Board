@@ -44,9 +44,14 @@ export const createElement = (id, x1, y1, x2, y2, type, options) => {
             const eraserElement = {
                 id, type, points : [{x : x1, y : y1}],
                 path : new Path2D(getSvgPathFromStroke(getStroke([{x : x1, y : y1}], {size : options.strokeWidth*4}))),
-                options : {...options, stroke : "#fff"}
             }
             return eraserElement;
         }
+        case TOOLS.TEXT : {
+            const textElement = {...element, text : "", ...cleanOptions};
+            return textElement;
+        }
+        default : 
+            throw new Error("Type not Recongnized");
     }
 }

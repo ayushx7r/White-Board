@@ -4,7 +4,8 @@ export const TOOLS = {
     RECT : "RECT",
     CIRCLE : "CIRCLE",
     ARROW : "ARROW",
-    ERASER : "ERASER"
+    ERASER : "ERASER",
+    TEXT : "TEXT"
 }
 
 export const TOOL_ACTIONS = {
@@ -13,7 +14,12 @@ export const TOOL_ACTIONS = {
     SET_CURR_STATE : "SET_CURR_STATE",
     ADD_ELEMENT : "ADD_ELEMENT",
     DRAW_MOVE : "DRAW_MOVE",
-    ERASE_MOVE: "ERASE_MOVE"
+    ERASE_MOVE: "ERASE_MOVE",
+    TEXT_WRITE : "TEXT_WRITE",
+    SNAPSHOT : "SNAPSHOT",
+    UNDO : "UNDO",
+    REDO : "REDO",
+    DELETE_LAST : "DELETE_LAST"
 }
 
 export const CURR_STATE = {

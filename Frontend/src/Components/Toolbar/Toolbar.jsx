@@ -7,6 +7,7 @@ import { LuSlash } from "react-icons/lu";
 import { MdOutlineRectangle } from "react-icons/md";
 import { FaRegCircle, FaLongArrowAltRight, FaEraser } from "react-icons/fa";
 import { IoIosBrush } from "react-icons/io";
+import { RiText } from "react-icons/ri";
 import { TOOLS } from '../../constants.js'
 
 
@@ -21,6 +22,7 @@ const Toolbar = () => {
       <ToolItem className = {currTool == TOOLS.CIRCLE ? classes.active : ""} onClick={() => handleToolChange(TOOLS.CIRCLE)}><FaRegCircle/></ToolItem>
       <ToolItem className = {currTool == TOOLS.ARROW ? classes.active : ""} onClick={() => handleToolChange(TOOLS.ARROW)}><FaLongArrowAltRight/></ToolItem>
       <ToolItem className = {currTool == TOOLS.ERASER ? classes.active : ""} onClick={() => handleToolChange(TOOLS.ERASER)}><FaEraser /></ToolItem>
+      <ToolItem className = {currTool == TOOLS.TEXT ? classes.active : ""} onClick={() => handleToolChange(TOOLS.TEXT)}><RiText /></ToolItem>
     </div>
   )
 }

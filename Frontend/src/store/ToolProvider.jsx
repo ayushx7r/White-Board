@@ -47,7 +47,7 @@ const initialState = {
         strokeWidth : 1
     },
     [TOOLS.TEXT] : {
-        strokeWidth : 16,
+        strokeWidth : 40,
         stroke : "#000"
     }
 }

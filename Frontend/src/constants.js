@@ -6,7 +6,6 @@ export const TOOLS = {
     ARROW : "ARROW",
     ERASER : "ERASER",
     TEXT : "TEXT",
-    MOVE : "MOVE"
 }
 
 export const TOOL_ACTIONS = {
@@ -20,8 +19,10 @@ export const TOOL_ACTIONS = {
     SNAPSHOT : "SNAPSHOT",
     UNDO : "UNDO",
     REDO : "REDO",
-    DELETE_LAST : "DELETE_LAST",
-    SET_OFFSET : "SET_OFFSET"
+    SET_OFFSET : "SET_OFFSET",
+    SET_SCALE : "SET_SCALE",
+    ZOOM_WHEEL : "ZOOM_WHEEL",
+    DELETE_CURR_HISTORY : "DELETE_CURR_HISTORY"
 }
 
 export const CURR_STATE = {
@@ -29,7 +30,6 @@ export const CURR_STATE = {
     DRAWING : "drawing",
     ERASING : "erasing",
     WRITING : "writing",
-    PANNING : "panning"
 }
 
 export const COLORS = {

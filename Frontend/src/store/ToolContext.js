@@ -24,6 +24,10 @@ const initialState = {
         stroke : "#000",
         strokeWidth : 1
     },
+    [TOOLS.TEXT] : {
+        stroke : "#000",
+        strokeWidth : 40
+    },
     [TOOLS.ERASER] : {
         strokeWidth : 1
     }

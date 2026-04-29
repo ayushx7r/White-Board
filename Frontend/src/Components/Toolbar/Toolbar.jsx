@@ -37,7 +37,6 @@ const Toolbar = () => {
 
   return (
     <div className={classes.container}>
-      <ToolItem className={currTool == TOOLS.MOVE? classes.active : ""} onClick={() => handleToolChange(TOOLS.MOVE)}><SlCursorMove/></ToolItem>
       <ToolItem className={currTool == TOOLS.BRUSH? classes.active : ""} onClick={() => handleToolChange(TOOLS.BRUSH)}><IoIosBrush/></ToolItem>
       <ToolItem className = {currTool == TOOLS.LINE ? classes.active : ""} onClick={() => handleToolChange(TOOLS.LINE)}><LuSlash/></ToolItem>
       <ToolItem className = {currTool == TOOLS.RECT ? classes.active : ""} onClick={() => handleToolChange(TOOLS.RECT)}><MdOutlineRectangle/> </ToolItem>

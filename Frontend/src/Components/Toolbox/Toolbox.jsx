@@ -12,7 +12,7 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 const Toolbox = () => {
   const {state, handleStrokeColorChange, handleFillShape, handleStrokeWidthChange} = useContext(ToolContext);
   const {currTool} = useContext(BoardContext);
-  if(currTool == TOOLS.MOVE || currTool == TOOLS.ERASER) return <></>
+  if(currTool == TOOLS.ERASER) return <></>
   
   const min = currTool == TOOLS.TEXT ? 16 : 1;
   const max = currTool == TOOLS.TEXT ? 60 : 10;

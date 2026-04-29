@@ -6,6 +6,7 @@ import {getStroke} from "perfect-freehand"
 const generator = rough.generator();
 export const createElement = (id, x1, y1, x2, y2, type, options) => {
     const element = {id, x1, y1, x2, y2, type};
+    console.log(element)
     const cleanOptions = {
         seed : id+1,
         strokeWidth : options.strokeWidth,

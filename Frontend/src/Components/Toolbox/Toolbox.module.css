@@ -9,6 +9,7 @@
     padding : 1rem 4rem 1rem 1rem;
     left : 1rem;
     transition: all 0.5s ease-out;
+    user-select: none;
 }
 
 .container p {

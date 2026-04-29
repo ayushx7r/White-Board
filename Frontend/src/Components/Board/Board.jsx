@@ -11,7 +11,7 @@ import History from '../History/History.jsx';
 const Board = () => {
     const canvasRef = useRef();
     const textAreaRef = useRef();
-    const { currTool, currPos, currState, elements, handleMouseDown, handleMouseMove, handleMouseUp, handleCanvasScroll, handleTextAreaBlur, offset, scale } = useContext(BoardContext);
+    const { currTool, currPos, currState, elements, handleMouseDown, handleMouseMove, handleMouseUp, handleCanvasScroll, handleTextAreaBlur, offset, scale, dispatchBoardState } = useContext(BoardContext);
     const {state} = useContext(ToolContext);
     useLayoutEffect(() => {
     const canvas = canvasRef.current;
@@ -64,7 +64,7 @@ const Board = () => {
       const { x, y } = currPos;
       context.save();
       context.beginPath();
-      context.arc(x, y, 14, 0, Math.PI * 2);
+      context.arc(x, y, 16, 0, Math.PI * 2);
       context.fillStyle = "rgba(0, 0, 0, 0.1)";
       context.fill();
       context.setLineDash([5, 5]);
@@ -86,6 +86,71 @@ const Board = () => {
       }
   }, [currState]);
 
+  const scaleRef = useRef(scale);
+  const offsetRef = useRef(offset);
+
+  useEffect(() => {
+    scaleRef.current = scale;
+    offsetRef.current = offset;
+  }, [scale, offset]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    const handleWheel = (e) => {
+  e.preventDefault();
+
+  const currentScale = scaleRef.current;
+  const currentOffset = offsetRef.current;
+
+  if (e.ctrlKey) {
+    const zoomSensitivity = 0.005;
+    const delta = -e.deltaY * zoomSensitivity;
+    
+    const rawNextScale = currentScale + delta;
+    
+    const nextScale = Math.min(Math.max(rawNextScale, 0.1), 5);
+    if (nextScale === currentScale) return;
+    const mouseWorldX = (e.clientX - currentOffset.x) / currentScale;
+    const mouseWorldY = (e.clientY - currentOffset.y) / currentScale;
+
+    const newOffset = {
+      x: Math.round(e.clientX - mouseWorldX * nextScale),
+      y: Math.round(e.clientY - mouseWorldY * nextScale)
+    };
+
+    dispatchBoardState({ 
+      type: TOOL_ACTIONS.ZOOM_WHEEL, 
+      payload: { newScale: nextScale, newOffset } 
+    });
+    
+  } else {
+      dispatchBoardState({
+        type: TOOL_ACTIONS.SET_OFFSET,
+        payload: { x: -e.deltaX, y: -e.deltaY }
+      });
+    }
+  };
+
+    canvas.addEventListener('wheel', handleWheel, { passive: false });
+    return () => canvas.removeEventListener('wheel', handleWheel);
+  }, [dispatchBoardState]);
+
+
+const zoomStep = 0.1;
+
+const handleZoomIn = () => {
+  dispatchBoardState({ type: TOOL_ACTIONS.SET_SCALE, payload: scale + zoomStep });
+};
+
+const handleZoomOut = () => {
+  dispatchBoardState({ type: TOOL_ACTIONS.SET_SCALE, payload: scale - zoomStep });
+};
+
+const handleResetZoom = () => {
+  dispatchBoardState({ type: TOOL_ACTIONS.SET_SCALE, payload: 1 });
+};
+
 const handleTextChange = (e) => {
   const textarea = e.target;
   textarea.style.width = 'auto';
@@ -98,8 +163,24 @@ const handleTextChange = (e) => {
     <>  
         <Toolbar currTool={currTool} />
         <Toolbox />
-        {currState == CURR_STATE.WRITING && <textarea onInput={handleTextChange} ref={textAreaRef} className={classes.textArea} style={{position : "absolute",top:elements[elements.length-1].y1 + offset.y, left: elements[elements.length-1].x1 + offset.x, fontSize: `${state[currTool].strokeWidth}px`, color : state[currTool].stroke}} onBlur={(e) => handleTextAreaBlur(e.target.value)}/>}
-        <canvas id='canvas' ref={canvasRef} onScroll={() => handleCanvasScroll(e)} height={window.innerHeight} width={window.innerWidth} onPointerDown={handleMouseDown} onPointerMove={handleMouseMove} onPointerUp={handleMouseUp} style={{touchAction: "none"}}></canvas>
+        {currState == CURR_STATE.WRITING && <textarea onInput={handleTextChange} ref={textAreaRef} className={classes.textArea} style={{position : "absolute",top:elements[elements.length-1].y1 * scale + offset.y, left: elements[elements.length-1].x1 * scale + offset.x, fontSize: `${state[currTool].strokeWidth*scale}px`, color : state[currTool].stroke}} onBlur={(e) => handleTextAreaBlur(e.target.value)}/>}
+        <div className={classes.zoomContainer}>
+          <button onClick={handleZoomOut}>-</button>
+          <span onClick={handleResetZoom} title="Reset Zoom">
+            {Math.round(scale * 100)}%
+          </span>
+          <button onClick={handleZoomIn}>+</button>
+        </div>
+        <canvas 
+          id='canvas' 
+          ref={canvasRef} 
+          height={window.innerHeight} 
+          width={window.innerWidth} 
+          onPointerDown={handleMouseDown}
+          onPointerMove={handleMouseMove} 
+          onPointerUp={handleMouseUp} 
+          style={{ touchAction: "none", userSelect: "none" }}
+        />
         <History />
     </>
   )

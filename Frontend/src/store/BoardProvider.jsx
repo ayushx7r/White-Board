@@ -67,17 +67,6 @@ function boardReducer (state, action) {
     case TOOL_ACTIONS.SET_CURR_STATE: {
       return {...state, currState : action.payload};
     }
-    case TOOL_ACTIONS.DELETE_CURR_HISTORY : {
-      const newHistory = [...state.history];
-      newHistory.pop();
-      console.log("history del")
-      return {
-        ...state,
-        history : [...newHistory],
-        index : state.index - 1
-      }
-    }
-
     case TOOL_ACTIONS.ADD_ELEMENT : {
       if(state.currTool == TOOLS.ERASER) return state;
       const element = createElement(state.elements.length+1, action.payload.points.x1, action.payload.points.y1, action.payload.points.x2, action.payload.points.y2, state.currTool, action.options);

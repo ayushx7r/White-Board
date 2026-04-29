@@ -83,3 +83,9 @@
 .container .collapseBtn:hover {
     background-color: #aaa;
 }
+
+@media (max-width : 800px) {
+    .container {
+        padding : 0.5rem 4rem 0.5rem 0.5rem
+    }
+}

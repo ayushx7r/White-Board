@@ -19,6 +19,16 @@ const Toolbox = () => {
 
   const steps = currTool == TOOLS.TEXT ? 2 : 1;
 
+  const [currPicker, setCurrPicker] = useState({stroke : false, fill : false});
+
+  const handlePickerClick = (curr) => {
+    setCurrPicker((state) => {
+      const newState = {stroke : false, fill : false};
+      newState[curr] = !state[curr];
+      return newState;
+    })
+  }
+
   const percentage = ((state[currTool].strokeWidth - min) / (max - min)) * 100;
   const trackStyle = {
     background: `linear-gradient(to right, ${currTool == TOOLS.ERASER ? "#fff" : state[currTool].stroke}, ${percentage}%, #444 ${percentage}%)`
@@ -35,8 +45,8 @@ const Toolbox = () => {
     }
   return (
     <div className={`${classes.container}  ${collapsed ? classes.collapsed : ""}`}>
-        {hasStroke(currTool) && <ColorPicker currColor={state[currTool].stroke} handleColorChange={handleStrokeColorChange} >Stroke</ColorPicker>}
-        {isClosed(currTool) && <ColorPicker currColor={state[currTool].fill} handleColorChange={handleFillShape} >Fill</ColorPicker>}
+        {hasStroke(currTool) && <ColorPicker currPicker={currPicker} handlePickerClick={handlePickerClick} currColor={state[currTool].stroke} handleColorChange={handleStrokeColorChange} >Stroke</ColorPicker>}
+        {isClosed(currTool) && <ColorPicker currPicker={currPicker} handlePickerClick={handlePickerClick} currColor={state[currTool].fill} handleColorChange={handleFillShape} >Fill</ColorPicker>}
         <p>{currTool == TOOLS.TEXT ? "Font Size" : "Storke Size"} : {state[currTool].strokeWidth} </p>
         <input style={trackStyle} className={classes.slider} ref={strokeWidthRef} value={state[currTool].strokeWidth} onChange={() => handleStrokeWidthChange(strokeWidthRef.current.value, currTool)} type='range' step={steps} min={min} max={max} />
         <button className={classes.collapseBtn} onClick={handleCollapse}> <FaArrowRightArrowLeft/> </button>

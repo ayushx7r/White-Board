@@ -15,6 +15,8 @@ const Board = () => {
     const {state} = useContext(ToolContext);
     useLayoutEffect(() => {
       const canvas = canvasRef.current;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
       const context = canvas.getContext("2d");
       let roughCanvas = rough.canvas(canvas);
        elements.forEach(element => {
@@ -41,12 +43,7 @@ const Board = () => {
 
               // 1. Split the text into an array of lines
               const lines = element.text.split("\n");
-              
-              // 2. Define the line height (matching your textarea line-height)
-              // Since you set line-height: 1 in CSS, it matches the font size
               const lineHeight = element.strokeWidth; 
-
-              // 3. Loop and draw each line individually
               lines.forEach((line, index) => {
                 context.fillText(
                   line, 
@@ -111,7 +108,7 @@ const handleTextChange = (e) => {
         <Toolbar currTool={currTool} />
         <Toolbox />
         {currState == CURR_STATE.WRITING && <textarea onInput={handleTextChange} ref={textAreaRef} className={classes.textArea} style={{position : "absolute",top:elements[elements.length-1].y1, left: elements[elements.length-1].x1, fontSize: `${state[currTool].strokeWidth}px`, color : state[currTool].stroke}} onBlur={(e) => handleTextAreaBlur(e.target.value)}/>}
-        <canvas ref={canvasRef} height={window.innerHeight} width={window.innerWidth} onPointerDown={handleMouseDown} onPointerMove={handleMouseMove} onPointerUp={handleMouseUp} style={{touchAction: "none"}}></canvas>
+        <canvas id='canvas' ref={canvasRef} height={window.innerHeight} width={window.innerWidth} onPointerDown={handleMouseDown} onPointerMove={handleMouseMove} onPointerUp={handleMouseUp} style={{touchAction: "none"}}></canvas>
         <History />
     </>
   )

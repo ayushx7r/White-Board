@@ -1,6 +1,6 @@
 .container {
     position : fixed;
-    width : 16rem;
+    width : 18rem;
     top : 50%;
     transform : translateY(-50%);
     background-color: #fff;

@@ -5,7 +5,8 @@ export const TOOLS = {
     CIRCLE : "CIRCLE",
     ARROW : "ARROW",
     ERASER : "ERASER",
-    TEXT : "TEXT"
+    TEXT : "TEXT",
+    MOVE : "MOVE"
 }
 
 export const TOOL_ACTIONS = {
@@ -19,14 +20,16 @@ export const TOOL_ACTIONS = {
     SNAPSHOT : "SNAPSHOT",
     UNDO : "UNDO",
     REDO : "REDO",
-    DELETE_LAST : "DELETE_LAST"
+    DELETE_LAST : "DELETE_LAST",
+    SET_OFFSET : "SET_OFFSET"
 }
 
 export const CURR_STATE = {
     IDLE : "idle",
     DRAWING : "drawing",
     ERASING : "erasing",
-    WRITING : "writing"
+    WRITING : "writing",
+    PANNING : "panning"
 }
 
 export const COLORS = {

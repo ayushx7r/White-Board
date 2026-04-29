@@ -2,7 +2,7 @@ import {createContext, useContext} from 'react'
 import { TOOLS, CURR_STATE } from '../constants';
 
 const initialState = {
-    currTool : TOOLS.LINE,
+    currTool : TOOLS.MOVE,
     elements : [],
     handleMouseDown : () => {},
     handleMouseMove : () => {},
@@ -11,7 +11,9 @@ const initialState = {
     options : {},
     currPos : {x : 0, y : 0},
     history : [[]],
-    index : 0
+    index : 0,
+    offset : {x : 0, y : 0},
+    scale : 1
 }
 
 const BoardContext = createContext(initialState);

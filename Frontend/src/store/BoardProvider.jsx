@@ -18,7 +18,9 @@ const initialBoardState = {
     options : {},
     currPos : {x : 0, y : 0},
     history : [[]],
-    index : 0
+    index : 0,
+    offset : {x : 0, y : 0},
+    scale : 1
 }
 
 const generator = rough.generator();
@@ -37,6 +39,12 @@ function boardReducer (state, action) {
     case TOOL_ACTIONS.ADD_ELEMENT : {
       const element = createElement(state.elements.length+1, action.payload.points.x1, action.payload.points.y1, action.payload.points.x2, action.payload.points.y2, state.currTool, action.options);
       return {...state, elements : [...state.elements, element]};
+    }
+    case TOOL_ACTIONS.SET_OFFSET : {
+      return {
+        ...state,
+        offset : {x : state.offset.x + action.payload.x, y : state.offset.y + action.payload.y}
+      }
     }
     case TOOL_ACTIONS.SNAPSHOT : {
       const newHistory = state.history.slice(0, state.index+1);
@@ -120,21 +128,29 @@ const BoardProvider = ({children}) => {
     const [boardState, dispatchBoardState] = useReducer(boardReducer, initialBoardState);
     const ctx = useContext(ToolContext);
 
+    const getWorldPointer = (screenX, screenY) => {
+      return {
+        x: (screenX - boardState.offset.x) / boardState.scale,
+        y: (screenY - boardState.offset.y) / boardState.scale
+      };
+    }; 
+
     const handleMouseDown = (e) => {
       if(boardState.currState == CURR_STATE.WRITING) {
         dispatchBoardState({type : TOOL_ACTIONS.SNAPSHOT});
         return;
       } 
       const {clientX, clientY} = e;
+      const {x, y} = getWorldPointer(clientX, clientY);
       switch(boardState.currTool) {
         case TOOLS.ERASER : {
           dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.ERASING});
-          dispatchBoardState({type : TOOL_ACTIONS.DRAW_MOVE, payload : {x : clientX, y : clientY}});
+          dispatchBoardState({type : TOOL_ACTIONS.DRAW_MOVE, payload : {x : x, y : y}});
           break;
         }
         case TOOLS.TEXT : {
           dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.WRITING});
-          dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : clientX, y1 : clientY, x2 : clientX, y2 : clientY}}, options : ctx.state[boardState.currTool]});
+          dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : x, y1 : y, x2 : x, y2 : y}}, options : ctx.state[boardState.currTool]});
           break;
         }
         case TOOLS.ARROW:
@@ -143,7 +159,11 @@ const BoardProvider = ({children}) => {
         case TOOLS.LINE:
         case TOOLS.RECT: {
           dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.DRAWING});
-          dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : clientX, y1 : clientY, x2 : clientX, y2 : clientY}}, options : ctx.state[boardState.currTool]});
+          dispatchBoardState({type : TOOL_ACTIONS.ADD_ELEMENT, payload : {points : {x1 : x, y1 : y, x2 : x, y2 : y}}, options : ctx.state[boardState.currTool]});
+          break;
+        }
+        case TOOLS.MOVE : {
+          dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.PANNING});
           break;
         }
       }
@@ -152,10 +172,13 @@ const BoardProvider = ({children}) => {
     const handleMouseMove = (e) => {
       if(boardState.currState == CURR_STATE.WRITING) return;
       const {clientX, clientY} = e;
-      dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_POS, payload : {x : clientX, y : clientY}});
+      const {x, y} = getWorldPointer(clientX, clientY);
+      dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_POS, payload : {x : x, y : y}});
       if(boardState.currState == CURR_STATE.DRAWING || boardState.currState == CURR_STATE.ERASING) {
-
-        dispatchBoardState({type : TOOL_ACTIONS.DRAW_MOVE, payload : {x : clientX, y : clientY}, radius : ctx.state[boardState.currTool].strokeWidth});
+        dispatchBoardState({type : TOOL_ACTIONS.DRAW_MOVE, payload : {x : x, y : y}, radius : ctx.state[boardState.currTool].strokeWidth});
+      } 
+      if(boardState.currState == CURR_STATE.PANNING) {
+        dispatchBoardState({type : TOOL_ACTIONS.SET_OFFSET, payload : {x : e.movementX, y : e.movementY}});
       }
     }
 
@@ -184,8 +207,12 @@ const BoardProvider = ({children}) => {
       dispatchBoardState({type : TOOL_ACTIONS.REDO});
     }
 
+    const handleCanvasScroll = (e) => {
+      dispatchBoardState({type : TOOL_ACTIONS.SET_OFFSET, payload : {x : e.movementX, y : e.movementY}});
+    }
 
-    const data = {...boardState, handleMouseDown, handleToolChange, handleMouseMove, handleMouseUp, handleTextAreaBlur, handleUndoButtonClick, handleRedoButtonClick};
+
+    const data = {...boardState, handleMouseDown, handleToolChange, handleMouseMove, handleMouseUp, handleTextAreaBlur, handleUndoButtonClick, handleRedoButtonClick, handleCanvasScroll};
   return (
     <BoardContext.Provider value={data}>
       {children}

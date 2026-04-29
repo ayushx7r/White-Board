@@ -40,13 +40,6 @@ export const createElement = (id, x1, y1, x2, y2, type, options) => {
             }
             return brushElement;
         }
-        case TOOLS.ERASER : {
-            const eraserElement = {
-                id, type, points : [{x : x1, y : y1}],
-                path : new Path2D(getSvgPathFromStroke(getStroke([{x : x1, y : y1}], {size : options.strokeWidth*4}))),
-            }
-            return eraserElement;
-        }
         case TOOLS.TEXT : {
             const textElement = {...element, text : "", ...cleanOptions};
             return textElement;

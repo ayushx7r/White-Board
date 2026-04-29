@@ -64,7 +64,7 @@ const Board = () => {
       const { x, y } = currPos;
       context.save();
       context.beginPath();
-      context.arc(x, y, state[TOOLS.ERASER].strokeWidth * 3, 0, Math.PI * 2);
+      context.arc(x, y, 14, 0, Math.PI * 2);
       context.fillStyle = "rgba(0, 0, 0, 0.1)";
       context.fill();
       context.setLineDash([5, 5]);
@@ -97,7 +97,7 @@ const handleTextChange = (e) => {
   return (
     <>  
         <Toolbar currTool={currTool} />
-        {currTool != TOOLS.MOVE && <Toolbox />}
+        <Toolbox />
         {currState == CURR_STATE.WRITING && <textarea onInput={handleTextChange} ref={textAreaRef} className={classes.textArea} style={{position : "absolute",top:elements[elements.length-1].y1 + offset.y, left: elements[elements.length-1].x1 + offset.x, fontSize: `${state[currTool].strokeWidth}px`, color : state[currTool].stroke}} onBlur={(e) => handleTextAreaBlur(e.target.value)}/>}
         <canvas id='canvas' ref={canvasRef} onScroll={() => handleCanvasScroll(e)} height={window.innerHeight} width={window.innerWidth} onPointerDown={handleMouseDown} onPointerMove={handleMouseMove} onPointerUp={handleMouseUp} style={{touchAction: "none"}}></canvas>
         <History />

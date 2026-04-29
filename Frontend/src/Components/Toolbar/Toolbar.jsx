@@ -17,21 +17,16 @@ const Toolbar = () => {
   const handleDownloadClick = () => {
     const canvas = document.getElementById('canvas');
     if (!canvas) return;
-
-    // 1. Create a temporary canvas of the same size
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = canvas.width;
     tempCanvas.height = canvas.height;
     const tempCtx = tempCanvas.getContext('2d');
 
-    // 2. Fill the background with white
     tempCtx.fillStyle = '#ffffff';
     tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
 
-    // 3. Draw your original canvas content on top of the white
     tempCtx.drawImage(canvas, 0, 0);
 
-    // 4. Export the temporary canvas
     const dataURL = tempCanvas.toDataURL("image/jpeg", 1.0);
     
     const a = document.createElement('a');

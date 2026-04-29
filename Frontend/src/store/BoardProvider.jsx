@@ -184,7 +184,7 @@ const BoardProvider = ({children}) => {
 
     const handleMouseUp = () => {
       if(boardState.currTool == TOOLS.TEXT) return;
-      dispatchBoardState({type : TOOL_ACTIONS.SNAPSHOT});
+      if(boardState.currTool != TOOLS.MOVE) dispatchBoardState({type : TOOL_ACTIONS.SNAPSHOT});
       if(boardState.currState != CURR_STATE.IDLE) {
         dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.IDLE});
       }

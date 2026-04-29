@@ -27,12 +27,12 @@ const initialState = {
     },
     [TOOLS.RECT] : {
         stroke : "#000",
-        fill : "transparent",
+        fill : "#000",
         strokeWidth : 1
     },
     [TOOLS.CIRCLE] : {
         stroke : "#000",
-        fill : "transparent",
+        fill : "#000",
         strokeWidth : 1
     },
     [TOOLS.ARROW] : {

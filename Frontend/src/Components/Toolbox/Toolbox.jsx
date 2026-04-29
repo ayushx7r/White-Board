@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useRef, useState, useEffect } from 'react'
 import classes from './Toolbox.module.css'
 import { PhotoshopPicker, SketchPicker } from 'react-color';
 import ColorPicker from '../ColorPicker/ColorPicker.jsx';
@@ -12,7 +12,7 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 const Toolbox = () => {
   const {state, handleStrokeColorChange, handleFillShape, handleStrokeWidthChange} = useContext(ToolContext);
   const {currTool} = useContext(BoardContext);
-
+  if(currTool == TOOLS.MOVE || currTool == TOOLS.ERASER) return <></>
   
   const min = currTool == TOOLS.TEXT ? 16 : 1;
   const max = currTool == TOOLS.TEXT ? 60 : 10;
@@ -20,6 +20,8 @@ const Toolbox = () => {
   const steps = currTool == TOOLS.TEXT ? 2 : 1;
 
   const [currPicker, setCurrPicker] = useState({stroke : false, fill : false});
+  const strokePickerRef = useRef();
+  const fillPickerRef = useRef();
 
   const handlePickerClick = (curr) => {
     setCurrPicker((state) => {
@@ -28,6 +30,20 @@ const Toolbox = () => {
       return newState;
     })
   }
+
+  useEffect(() => {
+    const strokePicker = strokePickerRef.current;
+    const fillPicker = fillPickerRef.current;
+    const handleClick = (e) => {
+      if(strokePicker?.contains(e.target) || fillPicker?.contains(e.target)) return;
+      setCurrPicker({stroke : false, fill : false});
+    }
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    }
+  })
 
   const percentage = ((state[currTool].strokeWidth - min) / (max - min)) * 100;
   const trackStyle = {
@@ -45,8 +61,8 @@ const Toolbox = () => {
     }
   return (
     <div className={`${classes.container}  ${collapsed ? classes.collapsed : ""}`}>
-        {hasStroke(currTool) && <ColorPicker currPicker={currPicker} handlePickerClick={handlePickerClick} currColor={state[currTool].stroke} handleColorChange={handleStrokeColorChange} >Stroke</ColorPicker>}
-        {isClosed(currTool) && <ColorPicker currPicker={currPicker} handlePickerClick={handlePickerClick} currColor={state[currTool].fill} handleColorChange={handleFillShape} >Fill</ColorPicker>}
+        {hasStroke(currTool) && <ColorPicker innerRef={strokePickerRef} currPicker={currPicker} handlePickerClick={handlePickerClick} currColor={state[currTool].stroke} handleColorChange={handleStrokeColorChange} >Stroke</ColorPicker>}
+        {isClosed(currTool) && <ColorPicker innerRef={fillPickerRef} currPicker={currPicker} handlePickerClick={handlePickerClick} currColor={state[currTool].fill} handleColorChange={handleFillShape} >Fill</ColorPicker>}
         <p>{currTool == TOOLS.TEXT ? "Font Size" : "Storke Size"} : {state[currTool].strokeWidth} </p>
         <input style={trackStyle} className={classes.slider} ref={strokeWidthRef} value={state[currTool].strokeWidth} onChange={() => handleStrokeWidthChange(strokeWidthRef.current.value, currTool)} type='range' step={steps} min={min} max={max} />
         <button className={classes.collapseBtn} onClick={handleCollapse}> <FaArrowRightArrowLeft/> </button>

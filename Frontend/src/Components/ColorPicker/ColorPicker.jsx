@@ -6,7 +6,7 @@ import ToolContext from '../../store/ToolContext.js'
 import CustomPicker  from "./CustomPicker.jsx"
 
 
-const ColorPicker = ({children, handleColorChange, currColor, handlePickerClick, currPicker}) => {
+const ColorPicker = ({children, handleColorChange, currColor, handlePickerClick, currPicker, innerRef}) => {
     const {currTool} = useContext(BoardContext);
     const [isPicker , setIsPicker] = useState(false);
     const {state} = useContext(ToolContext);
@@ -20,7 +20,7 @@ const ColorPicker = ({children, handleColorChange, currColor, handlePickerClick,
     <div className={classes.container}>
       <b> {children} </b>
       <div className={classes.colorPicker}>
-        <div className={classes.picker}>
+        <div className={classes.picker} ref={innerRef}>
           <div className={`${classes.color} ${classes.mainColor}`} style={{backgroundColor : state[currTool][curr]}} onClick={() => handlePickerClick(curr)}></div>
           {currPicker[curr] && <CustomPicker className={classes.customPicker} color={state[currTool][curr]} onChange={handleClick} />}
         </div>

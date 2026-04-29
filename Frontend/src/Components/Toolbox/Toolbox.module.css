@@ -42,17 +42,13 @@
   outline: none;
   border : 2px solid black;
   margin : 0.7rem 0;
-  height: 0.7rem; /* This is the track height */
-  
-  /* Ensure the input element can 'contain' the larger thumb */
-  /* If the thumb is 1.5rem, the input needs to be at least that tall */
-  /* padding: 10px 0;  */
+  height: 0.7rem;
   cursor: pointer;
 }
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 24px; /* Use pixels for a moment to test stability */
+  height: 24px;
   width: 24px;
   border-radius: 50%;
   background: #fff;
@@ -65,8 +61,6 @@
 
 }
 
-
-
 .container .collapseBtn {
     position : absolute;
     top:0;
@@ -74,17 +68,17 @@
     border : none;
     height : 100%;
     width : 50px;
-    background-color: #aaa  ;
+    background-color: rgba(0, 0, 0, 0.05) ;
     cursor: pointer;
     border-radius : 0 0.5rem 0.5rem 0;
     transition : all 0.3s ease;
 }
 
 .container.collapsed .collapseBtn {
-    background-color: #aaa;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 
 .container .collapseBtn:hover {
-    background-color: #7DF9FF;
+    background-color: #aaa;
 }

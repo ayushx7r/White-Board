@@ -73,11 +73,9 @@ function boardReducer (state, action) {
       return {...state, elements : [...state.elements, element]};
     }
     case TOOL_ACTIONS.SNAPSHOT : {
-      if (state.currTool === TOOLS.ERASER) {
-        const lastElements = state.history[state.index];
-        if (state.elements.length === lastElements.length) {
-          return state; 
-        }
+      const lastElements = state.history[state.index];
+      if (state.elements.length === lastElements.length) {
+        return state; 
       }
       const newHistory = state.history.slice(0, state.index+1);
       newHistory.push(state.elements);

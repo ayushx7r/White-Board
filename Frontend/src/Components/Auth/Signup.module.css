@@ -13,7 +13,7 @@
 
 .signupCard {
   width: 100%;
-  max-width: 480px; /* Slightly wider than login for the input row */
+  max-width: 480px;
   padding: 40px;
   background: rgba(24, 24, 27, 0.8);
   backdrop-filter: blur(20px);
@@ -87,7 +87,6 @@
   gap: 16px;
 }
 
-/* Row for Name & Username */
 .inputRow {
   display: flex;
   gap: 12px;

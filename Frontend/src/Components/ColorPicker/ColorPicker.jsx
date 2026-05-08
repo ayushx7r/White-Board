@@ -18,11 +18,9 @@ const ColorPicker = ({children, handleColorChange, currColor, handlePickerClick,
     
   return (
     <div className={classes.container}>
-      {/* 1. Changed from <b> to a styled <p> tag to fix the dark serif font */}
       <p className={classes.label}> {children} </p>
       
       <div className={classes.colorPicker}>
-        {/* Main Active Color Button */}
         <div className={classes.picker} ref={innerRef}>
           <div 
             className={`${classes.color} ${classes.mainColor}`} 
@@ -30,7 +28,6 @@ const ColorPicker = ({children, handleColorChange, currColor, handlePickerClick,
             onClick={() => handlePickerClick(curr)}
           ></div>
           
-          {/* The Popup Custom Picker */}
           {currPicker[curr] && (
             <div className={classes.customPickerWrapper}>
               <CustomPicker color={state[currTool][curr]} onChange={handleClick} />
@@ -38,10 +35,8 @@ const ColorPicker = ({children, handleColorChange, currColor, handlePickerClick,
           )}
         </div>
 
-        {/* Divider line between main color and presets */}
         <div className={classes.divider}></div>
 
-        {/* Preset Colors Map */}
         <div className={classes.colors}>
           {Object.keys(COLORS).map((el) => 
               <div 

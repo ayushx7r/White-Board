@@ -2,12 +2,12 @@ import React from 'react';
 import classes from './Coordinate.module.css';
 import { TbCrosshair } from "react-icons/tb"; 
 
-const Coordinates = ({ currPos, offset, scale}) => {
+const Coordinates = ({ currPos, offset, scale, handleSetOffset}) => {
     const x = (currPos.x - offset.x) / scale;
     const y = (currPos.y - offset.y) / scale;
   return (
     <div className={classes.container}>
-      <TbCrosshair className={classes.icon} />
+      <TbCrosshair className={classes.icon} onClick={handleSetOffset} />
       <div className={classes.values}>
         <span className={classes.label}>
           X <span className={classes.number}>{Math.round(x || 0)}</span>

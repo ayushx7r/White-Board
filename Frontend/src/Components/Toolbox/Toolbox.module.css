@@ -9,7 +9,6 @@
   padding: 20px;
   width: 20rem;
   
-  /* Glassmorphism */
   background: rgba(24, 24, 27, 0.75); 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -18,23 +17,18 @@
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
   z-index: 90;
   
-  /* Smooth Collapse Transition */
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
 }
-
-/* Collapsed State */
 .collapsed {
-  /* Keeps the vertical center (-50%) while sliding it left off-screen */
   transform: translate(calc(-100% - 32px), -50%); 
   opacity: 0.5;
 }
 
-/* The Toggle Button that sticks to the side */
 .collapseBtn {
   position: absolute;
-  top: 50%; /* Centers the button vertically on the right edge */
+  top: 50%; 
   right: -48px;
-  transform: translateY(-50%); /* Aligns it perfectly */
+  transform: translateY(-50%);
   width: 36px;
   height: 36px;
   border-radius: 12px;
@@ -65,9 +59,7 @@
   outline: none;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 0; /* Ensures the background gradient goes flush to the edges */
-  
-  /* REMOVE the 'accent-color: #ffffff;' line if it is still there! */
+  padding: 0; 
 }
 
 .pickerGroup {
@@ -76,14 +68,12 @@
   gap: 24px; 
 }
 
-/* Adds a nice gap between the "Stroke Size" text and the actual slider */
 .sliderGroup {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* 2. Fixes the dark serif font to match the sleek gray aesthetic */
 .label {
   display: flex;
   justify-content: space-between;
@@ -92,11 +82,10 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #a1a1aa; /* This forces the text to be light gray instead of black! */
+  color: #a1a1aa;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Makes the actual number value (e.g., the "1") pop in bright white */
 .label span {
   color: #ffffff; 
 }

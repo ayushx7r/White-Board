@@ -17,7 +17,7 @@ const initialBoardState = {
     currState : CURR_STATE.IDLE,
     options : {},
     currPos : {x : 0, y : 0},
-    history : [[]],
+    history : [[]], 
     index : 0,
     offset : {x : 0, y : 0},
     scale : 1
@@ -38,6 +38,14 @@ function boardReducer (state, action) {
           y: state.offset.y + action.payload.y 
         }
       };
+    }
+
+    case TOOL_ACTIONS.RESET_OFFSET : {
+      return {
+        ...state, 
+        offset : {x : 0, y : 0},
+        currPos : {x : 0, y : 0}
+      }
     }
     case TOOL_ACTIONS.ZOOM_WHEEL: {
       return {
@@ -252,8 +260,13 @@ const BoardProvider = ({children}) => {
       dispatchBoardState({type : TOOL_ACTIONS.SET_OFFSET, payload : {x : e.movementX, y : e.movementY}});
     }
 
+    const handleSetOffset = () => {
+      dispatchBoardState({type : TOOL_ACTIONS.RESET_OFFSET});
+    }
 
-    const data = {...boardState, handleMouseDown, handleToolChange, handleMouseMove, handleMouseUp, handleTextAreaBlur, handleUndoButtonClick, handleRedoButtonClick, handleCanvasScroll, dispatchBoardState};
+
+
+    const data = {...boardState, handleMouseDown, handleToolChange, handleMouseMove, handleMouseUp, handleTextAreaBlur, handleUndoButtonClick, handleRedoButtonClick, handleCanvasScroll, dispatchBoardState, handleSetOffset};
   return (
     <BoardContext.Provider value={data}>
       {children}

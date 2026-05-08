@@ -1,4 +1,3 @@
-/* The Floating Frosted Glass Container */
 .container {
   position: fixed;
   bottom: 32px;
@@ -10,19 +9,16 @@
   padding: 8px 12px;
   justify-content: space-around;
   
-  /* Dark Glassmorphism Effect */
   background: rgba(24, 24, 27, 0.75); 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   
-  /* Subtle borders and shadow for depth */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   z-index: 100;
 }
 
-/* Default Tool Button Styling */
 .toolBtn {
   display: flex;
   align-items: center;
@@ -30,7 +26,7 @@
   width: 44px;
   height: 44px;
   background: transparent;
-  color: #a1a1aa; /* Muted gray icon */
+  color: #a1a1aa; 
   border-radius: 14px;
   border: 1px solid transparent;
   font-size: 20px;
@@ -38,14 +34,12 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hover State */
 .toolBtn:hover {
   background: rgba(255, 255, 255, 0.06);
-  color: #f4f4f5; /* Brighten icon on hover */
+  color: #f4f4f5; 
   transform: translateY(-1px);
 }
 
-/* Active Tool State (The Aesthetic Purple Glow) */
 .active {
   display: flex;
   align-items: center;
@@ -57,14 +51,12 @@
   cursor: pointer;
   transition: all 0.2s ease;
   
-  /* Deep purple active background and vibrant icon */
   background: rgba(168, 85, 247, 0.15) !important;
   color: #c084fc !important;
   border: 1px solid rgba(168, 85, 247, 0.3) !important;
   box-shadow: 0 0 16px rgba(168, 85, 247, 0.15);
 }
 
-/* Little vertical line separating drawing tools from download */
 .divider {
   width: 1px;
   height: 24px;
@@ -74,9 +66,9 @@
 
 @media (max-width: 768px) {
   .container {
-    bottom: 15px; /* Bring toolbar to the very bottom */
-    width: 95%;   /* Make it take full width */
-    gap: 2px;     /* Tighten icons */
+    bottom: 15px;
+    width: 95%;  
+    gap: 2px;    
     padding: 6px;
   }
 }

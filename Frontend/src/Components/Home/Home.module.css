@@ -7,7 +7,6 @@
   overflow: hidden;
 }
 
-/* --- SIDEBAR --- */
 .sidebar {
   width: 260px;
   background: #121212;
@@ -117,7 +116,6 @@
 .friendInfo span { font-size: 10px; color: #555; }
 .onlineStatus { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; margin-left: auto; box-shadow: 0 0 5px #22c55e66; }
 
-/* --- MAIN CONTENT --- */
 .mainContent {
   flex: 1;
   padding: 24px 40px;
@@ -218,17 +216,16 @@
 
 @media (max-width: 768px) {
   .layout {
-    flex-direction: column; /* Stack main content over the nav */
+    flex-direction: column;
   }
 
-  /* --- MOBILE BOTTOM NAV --- */
   .sidebar {
     width: 100% !important;
     height: 70px;
     position: fixed;
     bottom: 0;
     left: 0;
-    flex-direction: row; /* Horizontal layout */
+    flex-direction: row;
     justify-content: space-around;
     padding: 0 10px !important;
     border-right: none;
@@ -238,7 +235,6 @@
     z-index: 1000;
   }
 
-  /* Hide Desktop-only elements on mobile */
   .logoSection, 
   .friendsSection, 
   .toggleBtn, 
@@ -263,10 +259,9 @@
   }
 
   .navItem svg {
-    font-size: 24px; /* Larger icons for mobile thumbs */
+    font-size: 24px;
   }
 
-  /* Float the 'Create' button in the middle or end */
   .createSidebarBtn {
     width: 48px !important;
     height: 48px !important;
@@ -274,19 +269,18 @@
     margin-bottom: 0;
     padding: 0;
     position: relative;
-    top: -5px; /* Slight lift for emphasis */
+    top: -5px;
     box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
   }
 
-  /* --- MAIN CONTENT ADJUSTMENTS --- */
   .mainContent {
     padding: 16px;
-    padding-bottom: 90px; /* Room for the bottom nav */
+    padding-bottom: 90px;
     background-size: 20px 20px;
   }
 
   .topHeader {
-    flex-direction: column-reverse; /* Search below profile on mobile */
+    flex-direction: column-reverse;
     gap: 16px;
   }
 
@@ -300,10 +294,9 @@
   }
 
   .grid {
-    grid-template-columns: 1fr; /* Single column for phone cards */
+    grid-template-columns: 1fr;
   }
 
-  /* Adjust the Modal for mobile */
   .canvasGridHeader h2 {
     font-size: 1.1rem;
   }

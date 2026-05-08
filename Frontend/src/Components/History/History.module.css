@@ -1,4 +1,3 @@
-/* The Floating Frosted Glass Container */
 .container {
   position: fixed;
   bottom: 32px;
@@ -8,7 +7,6 @@
   gap: 4px;
   padding: 8px;
   
-  /* Matches the Toolbar and Toolbox glass effect exactly */
   background: rgba(24, 24, 27, 0.75); 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -19,7 +17,6 @@
   z-index: 100;
 }
 
-/* Base button styling */
 .actionBtn {
   display: flex;
   align-items: center;
@@ -27,7 +24,7 @@
   width: 40px;
   height: 40px;
   background: transparent;
-  color: #a1a1aa; /* Muted gray icon */
+  color: #a1a1aa;
   border-radius: 12px;
   border: none;
   font-size: 22px;
@@ -35,14 +32,12 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hover state (only applies if the button is NOT disabled) */
 .actionBtn:hover:not(.disabled) {
   background: rgba(255, 255, 255, 0.08);
-  color: #f4f4f5; /* Brighten icon on hover */
+  color: #f4f4f5;
   transform: translateY(-1px);
 }
 
-/* Disabled state */
 .disabled {
   opacity: 0.3;
   cursor: not-allowed;
@@ -50,18 +45,15 @@
 
 @media (max-width: 768px) {
   .container {
-    /* Position it above the toolbar */
-    bottom: 120px; /* Toolbar is at ~15px + toolbar height (~55px) = 70px. 80px gives a nice gap. */
+    bottom: 120px;
     left: 50%;
     transform: translateX(-50%);
-    
-    /* Aesthetic Adjustments */
     padding: 4px;
     gap: 8px;
     border-radius: 12px;
     width: auto;
     display: flex;
-    flex-direction: row; /* Keep buttons side-by-side */
+    flex-direction: row; 
     background: rgba(24, 24, 27, 0.9);
   }
 

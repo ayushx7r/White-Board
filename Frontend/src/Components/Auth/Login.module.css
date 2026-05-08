@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* ZenithBoard Dark Grid Background */
   background-color: #121212;
   background-image: 
     linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
@@ -34,7 +33,7 @@
 }
 
 .title span {
-  color: #c084fc; /* The signature purple */
+  color: #c084fc;
 }
 
 .subtitle {
@@ -42,8 +41,6 @@
   font-size: 0.9rem;
   margin-bottom: 32px;
 }
-
-/* Social Button */
 .socialBtn {
   width: 100%;
   display: flex;
@@ -76,7 +73,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #18181b; /* Matches card bg */
+  background: #18181b;
   padding: 0 10px;
   color: #52525b;
   font-size: 0.75rem;
@@ -84,7 +81,6 @@
   letter-spacing: 1px;
 }
 
-/* Form Styling */
 .form {
   display: flex;
   flex-direction: column;

@@ -13,7 +13,7 @@ import Coordinates from '../Coordinate/Coordinate.jsx';
 const Board = () => {
     const canvasRef = useRef();
     const textAreaRef = useRef();
-    const { currTool, currPos, currState, elements, handleMouseDown, handleMouseMove, handleMouseUp, handleCanvasScroll, handleTextAreaBlur, offset, scale, dispatchBoardState } = useContext(BoardContext);
+    const { currTool, currPos, currState, elements, handleMouseDown, handleMouseMove, handleMouseUp, handleCanvasScroll, handleTextAreaBlur, offset, scale, dispatchBoardState, handleSetOffset } = useContext(BoardContext);
     const {state} = useContext(ToolContext);
 
     useEffect(() => {
@@ -183,13 +183,13 @@ const handleTextChange = (e) => {
 };
 
   return (
-    <>  
+    <div className={classes.boardWrapper}>  
         <Toolbar currTool={currTool} />
         <Toolbox />
         {currState == CURR_STATE.WRITING && <textarea onInput={handleTextChange} ref={textAreaRef} className={classes.textArea} style={{position : "absolute",top:elements[elements.length-1].y1 * scale + offset.y, left: elements[elements.length-1].x1 * scale + offset.x, fontSize: `${state[currTool].strokeWidth*scale}px`, color : state[currTool].stroke}} onBlur={(e) => handleTextAreaBlur(e.target.value)}/>}
 
         <Scale handleZoomOut={handleZoomOut} handleResetZoom={handleResetZoom} handleZoomIn={handleZoomIn} scale={scale} />
-
+        <div className={classes.gridBackground} />
         <canvas 
           id='canvas' 
           ref={canvasRef} 
@@ -202,18 +202,13 @@ const handleTextChange = (e) => {
             touchAction: "none", 
             userSelect: "none",
             backgroundColor: "#121212",
-            backgroundImage: `
-              linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
-            `,
-            backgroundSize: `${24 * scale}px ${24 * scale}px`, 
-            backgroundPosition: `${offset.x}px ${offset.y}px`  
+             
           }}
         />
         <History />
       
-        <Coordinates currPos={currPos} offset={offset} scale={scale}/>
-    </>
+        <Coordinates currPos={currPos} offset={offset} handleSetOffset={handleSetOffset} scale={scale}/>
+    </div>
   )
 }
 

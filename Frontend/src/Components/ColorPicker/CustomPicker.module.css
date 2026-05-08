@@ -1,0 +1,61 @@
+.pickerContainer {
+  padding: 12px;
+  background: rgba(24, 24, 27, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  width: 200px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.customColorful {
+  width: 100% !important;
+  height: 160px !important;
+}
+
+.customColorful :global(.react-colorful__saturation) {
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.customColorful :global(.react-colorful__hue),
+.customColorful :global(.react-colorful__alpha) {
+  height: 12px !important;
+  border-radius: 10px !important;
+  margin-top: 12px;
+}
+
+.customColorful :global(.react-colorful__pointer) {
+  width: 18px !important;
+  height: 18px !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.colorValues {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hexText {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #a1a1aa;
+  letter-spacing: 0.5px;
+}

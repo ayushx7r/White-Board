@@ -22,25 +22,25 @@ const toolReducer = (state, action) => {
 
 const initialState = {
     [TOOLS.LINE] : {
-        stroke : "#000",
+        stroke : "#fff",
         strokeWidth : 1
     },
     [TOOLS.RECT] : {
-        stroke : "#000",
-        fill : "#000",
+        stroke : "#fff",
+        fill : "transparent",
         strokeWidth : 1
     },
     [TOOLS.CIRCLE] : {
-        stroke : "#000",
-        fill : "#000",
+        stroke : "#fff",
+        fill : "transparent",
         strokeWidth : 1
     },
     [TOOLS.ARROW] : {
-        stroke : "#000",
+        stroke : "#fff",
         strokeWidth : 1
     },
     [TOOLS.BRUSH] : {
-        stroke : "#000",
+        stroke : "#fff",
         strokeWidth : 1
     },
     [TOOLS.ERASER] : {
@@ -48,7 +48,7 @@ const initialState = {
     },
     [TOOLS.TEXT] : {
         strokeWidth : 40,
-        stroke : "#000"
+        stroke : "#fff"
     }
 }
   

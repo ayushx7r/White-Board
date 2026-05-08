@@ -17,34 +17,36 @@ const Toolbar = () => {
   const handleDownloadClick = () => {
     const canvas = document.getElementById('canvas');
     if (!canvas) return;
+
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = canvas.width;
     tempCanvas.height = canvas.height;
     const tempCtx = tempCanvas.getContext('2d');
 
-    tempCtx.fillStyle = '#ffffff';
+    tempCtx.fillStyle = '#121212';
     tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-
     tempCtx.drawImage(canvas, 0, 0);
-
     const dataURL = tempCanvas.toDataURL("image/jpeg", 1.0);
     
     const a = document.createElement('a');
     a.href = dataURL;
-    a.download = "board.jpg";
+    a.download = "ZenithBoard_Export.jpg";
     a.click();
-  }
+}
 
   return (
     <div className={classes.container}>
-      <ToolItem className={currTool == TOOLS.BRUSH? classes.active : ""} onClick={() => handleToolChange(TOOLS.BRUSH)}><IoIosBrush/></ToolItem>
-      <ToolItem className = {currTool == TOOLS.LINE ? classes.active : ""} onClick={() => handleToolChange(TOOLS.LINE)}><LuSlash/></ToolItem>
-      <ToolItem className = {currTool == TOOLS.RECT ? classes.active : ""} onClick={() => handleToolChange(TOOLS.RECT)}><MdOutlineRectangle/> </ToolItem>
-      <ToolItem className = {currTool == TOOLS.CIRCLE ? classes.active : ""} onClick={() => handleToolChange(TOOLS.CIRCLE)}><FaRegCircle/></ToolItem>
-      <ToolItem className = {currTool == TOOLS.ARROW ? classes.active : ""} onClick={() => handleToolChange(TOOLS.ARROW)}><FaLongArrowAltRight/></ToolItem>
-      <ToolItem className = {currTool == TOOLS.ERASER ? classes.active : ""} onClick={() => handleToolChange(TOOLS.ERASER)}><FaEraser /></ToolItem>
-      <ToolItem className = {currTool == TOOLS.TEXT ? classes.active : ""} onClick={() => handleToolChange(TOOLS.TEXT)}><RiText /></ToolItem>
-      <ToolItem  onClick={handleDownloadClick}><FaDownload /></ToolItem>
+      <ToolItem className={currTool === TOOLS.BRUSH ? classes.active : classes.toolBtn} onClick={() => handleToolChange(TOOLS.BRUSH)}><IoIosBrush/></ToolItem>
+      <ToolItem className={currTool === TOOLS.LINE ? classes.active : classes.toolBtn} onClick={() => handleToolChange(TOOLS.LINE)}><LuSlash/></ToolItem>
+      <ToolItem className={currTool === TOOLS.RECT ? classes.active : classes.toolBtn} onClick={() => handleToolChange(TOOLS.RECT)}><MdOutlineRectangle/></ToolItem>
+      <ToolItem className={currTool === TOOLS.CIRCLE ? classes.active : classes.toolBtn} onClick={() => handleToolChange(TOOLS.CIRCLE)}><FaRegCircle/></ToolItem>
+      <ToolItem className={currTool === TOOLS.ARROW ? classes.active : classes.toolBtn} onClick={() => handleToolChange(TOOLS.ARROW)}><FaLongArrowAltRight/></ToolItem>
+      <ToolItem className={currTool === TOOLS.ERASER ? classes.active : classes.toolBtn} onClick={() => handleToolChange(TOOLS.ERASER)}><FaEraser /></ToolItem>
+      <ToolItem className={currTool === TOOLS.TEXT ? classes.active : classes.toolBtn} onClick={() => handleToolChange(TOOLS.TEXT)}><RiText /></ToolItem>
+
+      <div className={classes.divider}></div>
+      
+      <ToolItem className={classes.toolBtn} onClick={handleDownloadClick}><FaDownload /></ToolItem>
     </div>
   )
 }

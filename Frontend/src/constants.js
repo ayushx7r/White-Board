@@ -33,10 +33,11 @@ export const CURR_STATE = {
 }
 
 export const COLORS = {
-    BLACK : "#000",
-    YELLOW : "#ff0",
-    RED : "#f00",
-    TRANS : "#fff",
-    BLUE : "#155DFC",
-    PURPLE : "#800080"
+    WHITE: "#FFFFFF", 
+    BLACK: "#1E1E24",
+    YELLOW: "#FFD166",
+    RED: "#EF476F",
+    BLUE: "#3A86FF",
+    PURPLE: "#9D4EDD",
+    TRANSPARENT: "transparent"
 }

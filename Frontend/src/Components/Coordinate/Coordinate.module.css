@@ -1,0 +1,84 @@
+/* The Floating Frosted Glass Container */
+.container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  
+  /* Matches the ZenithBoard glass effect */
+  background: rgba(24, 24, 27, 0.75); 
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 90;
+  
+  /* CRITICAL: Allows drawing strokes to pass through the UI! */
+  pointer-events: none; 
+  user-select: none;
+}
+
+/* Subtle purple glow for the icon */
+.icon {
+  font-size: 16px;
+  color: #c084fc; 
+}
+
+/* Flex layout for the numbers */
+.values {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Typography for the 'X' and 'Y' labels */
+.label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #a1a1aa; /* Muted gray */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Typography for the actual numbers */
+.number {
+  color: #f4f4f5; /* Bright white */
+  /* Monospace font prevents the UI from jiggling as digits change width */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  
+  /* Forces the number box to hold a steady width (handles up to 4 digits cleanly) */
+  min-width: 32px; 
+  text-align: right;
+}
+
+/* Little vertical line separating X and Y */
+.divider {
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .container {
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    gap: 8px;
+  }
+  
+  .label {
+    gap: 2px;
+  }
+
+  /* Hide the text 'X' and 'Y' labels, keep only numbers */
+  .label { font-size: 0; } 
+  .number { font-size: 10px; min-width: 25px; }
+}

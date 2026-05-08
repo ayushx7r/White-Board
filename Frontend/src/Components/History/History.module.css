@@ -1,22 +1,73 @@
+/* The Floating Frosted Glass Container */
 .container {
-    display : flex;
-    position : fixed;
-    left : 1rem;
-    bottom : 1rem;
+  position: fixed;
+  bottom: 32px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  
+  /* Matches the Toolbar and Toolbox glass effect exactly */
+  background: rgba(24, 24, 27, 0.75); 
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 100;
 }
 
-.container button {
-    height : 2.7rem;
-    width : 2.7rem;
-    background-color: #fff;
-    border : none;
-    cursor : pointer;
+/* Base button styling */
+.actionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  color: #a1a1aa; /* Muted gray icon */
+  border-radius: 12px;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.container button:hover {
-    transform: scale(1.3);
+/* Hover state (only applies if the button is NOT disabled) */
+.actionBtn:hover:not(.disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f4f4f5; /* Brighten icon on hover */
+  transform: translateY(-1px);
 }
 
-.container .disabled {
-    cursor : not-allowed;
+/* Disabled state */
+.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .container {
+    /* Position it above the toolbar */
+    bottom: 120px; /* Toolbar is at ~15px + toolbar height (~55px) = 70px. 80px gives a nice gap. */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Aesthetic Adjustments */
+    padding: 4px;
+    gap: 8px;
+    border-radius: 12px;
+    width: auto;
+    display: flex;
+    flex-direction: row; /* Keep buttons side-by-side */
+    background: rgba(24, 24, 27, 0.9);
+  }
+
+  .actionBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
 }

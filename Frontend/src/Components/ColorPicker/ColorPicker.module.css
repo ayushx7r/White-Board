@@ -1,54 +1,110 @@
+/* Outer wrapper */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Matches the exact typography of the "Stroke Size" text */
+.label {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #a1a1aa; /* Muted gray */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Flex row perfectly aligns the big square and little squares */
+.colorPicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Wrapper for the preset colors */
 .colors {
-    display : flex;
-    gap : 1rem;
-    border-left : 2px solid black;
-    padding : 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap; /* Prevents overflow if you add lots of colors */
 }
 
-.container b {
-    display : block;
-    margin : 0.7rem 0 0.5rem 0;
+/* The actual colored square itself */
+.color {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  /* Soft translucent border instead of harsh black */
+  border: 1px solid rgba(255, 255, 255, 0.15); 
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.container .colorBox {
-    padding : 0.2rem;
-    box-sizing: border-box;
-    height : 1.5rem;
-    width : 1.5rem;
-    display : flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+/* The larger main color display */
+.mainColor {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.container .active {
-     border : 2px solid black;
+.mainColor:hover {
+  transform: scale(1.05);
 }
 
-.container .color {
-    box-sizing: border-box;
-    height : 1rem;
-    width : 1rem;
-    border : 1px solid black;
-    cursor: pointer;
+/* The invisible click-area wrapper around preset colors */
+.colorBox {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.container .customPicker {
-    position : absolute;
-    z-index: 999;
-    left : 3rem;
-    top : 0;
+.colorBox:hover {
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.container .mainColor {
-    height : 1.5rem;
-    width : 1.5rem;
+/* The active state ring around the selected preset color */
+.active {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.container .colorPicker {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap : 1rem;
-    position: relative;
+/* Custom picker wrapper to make it float */
+.picker {
+  position: relative;
+}
+
+.customPickerWrapper {
+  position: absolute;
+  top: calc(100% + 12px); /* Floats exactly below the square */
+  left: 0;
+  z-index: 1000;
+  
+  /* Adds a shadow so the picker pops off the dark background */
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+/* Tiny vertical line separating main color from presets */
+.divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 2px;
+}
+
+/* The aesthetic dark-mode checkerboard pattern */
+.transparentPattern {
+  background-color: transparent !important;
+  background-image: repeating-conic-gradient(rgba(255, 255, 255, 0.1) 0% 25%, transparent 0% 50%);
+  background-size: 8px 8px; /* Controls the size of the checkerboard squares */
 }

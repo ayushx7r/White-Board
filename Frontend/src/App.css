@@ -7,9 +7,10 @@
 
 body, html{
     overflow: hidden;
-    overscroll-behavior: none; /* Prevents pull-to-refresh shaking */
+    overscroll-behavior: none;
     position: fixed;
     width: 100%;
     height: 100%;
+    background-color: #121212;
 }
 

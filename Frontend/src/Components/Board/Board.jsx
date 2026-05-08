@@ -15,10 +15,31 @@ const Board = () => {
     const textAreaRef = useRef();
     const { currTool, currPos, currState, elements, handleMouseDown, handleMouseMove, handleMouseUp, handleCanvasScroll, handleTextAreaBlur, offset, scale, dispatchBoardState } = useContext(BoardContext);
     const {state} = useContext(ToolContext);
+
+    useEffect(() => {
+      const handleResize = () => {
+        const canvas = canvasRef.current;
+        if(!canvas) return;
+        const width = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+        const height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        canvas.width = width; 
+        canvas.height = height;
+      }
+
+      window.addEventListener('resize', handleResize);
+      window.visualViewport.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        window.visualViewport.removeEventListener('resize', handleResize);
+      }
+    }, [])
     useLayoutEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = window.innerWidth; 
-    canvas.height = window.innerHeight;
+    const width = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+    const height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    canvas.width = width; 
+    canvas.height = height;
     
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -168,6 +189,7 @@ const handleTextChange = (e) => {
         {currState == CURR_STATE.WRITING && <textarea onInput={handleTextChange} ref={textAreaRef} className={classes.textArea} style={{position : "absolute",top:elements[elements.length-1].y1 * scale + offset.y, left: elements[elements.length-1].x1 * scale + offset.x, fontSize: `${state[currTool].strokeWidth*scale}px`, color : state[currTool].stroke}} onBlur={(e) => handleTextAreaBlur(e.target.value)}/>}
 
         <Scale handleZoomOut={handleZoomOut} handleResetZoom={handleResetZoom} handleZoomIn={handleZoomIn} scale={scale} />
+
         <canvas 
           id='canvas' 
           ref={canvasRef} 

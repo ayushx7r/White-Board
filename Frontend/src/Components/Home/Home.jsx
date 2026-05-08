@@ -30,7 +30,6 @@ const Home = () => {
 
   return (
     <div className={`${classes.layout} ${isCollapsed ? classes.sidebarCollapsed : ''}`}>
-      {/* Sidebar Navigation */}
       <aside className={classes.sidebar}>
         <div className={classes.logoSection}>
           <div className={classes.logoIcon}>Z</div>
@@ -82,7 +81,6 @@ const Home = () => {
         )}
       </aside>
 
-      {/* Main Content Area */}
       <main className={classes.mainContent}>
         <header className={classes.topHeader}>
           <div className={classes.searchContainer}>
@@ -115,7 +113,6 @@ const Home = () => {
               </div>
               
               <div className={classes.previewBox}>
-                {/* Visual grid placeholder for aesthetic */}
                 <div className={classes.miniGrid}></div>
               </div>
 
@@ -129,7 +126,6 @@ const Home = () => {
         </div>
       </main>
 
-      {/* Create Canvas Modal */}
       {isModalOpen && <CreateCanvasModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );

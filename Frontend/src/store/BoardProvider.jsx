@@ -237,6 +237,7 @@ const BoardProvider = ({children}) => {
     const handleTextAreaBlur = (text) => {
       dispatchBoardState({type : TOOL_ACTIONS.SET_CURR_STATE, payload : CURR_STATE.IDLE});
       dispatchBoardState({type : TOOL_ACTIONS.TEXT_WRITE, payload : text});
+      dispatchBoardState({type : TOOL_ACTIONS.SNAPSHOT});
     }
 
     const handleUndoButtonClick = () => {

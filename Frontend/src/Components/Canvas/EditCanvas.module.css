@@ -1,0 +1,302 @@
+.editWrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2500;
+  padding: 20px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 950px;
+  height: 620px;
+  background: rgba(22, 22, 26, 0.7);
+  backdrop-filter: blur(35px);
+  -webkit-backdrop-filter: blur(35px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.9);
+  animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 240px;
+  background: rgba(255, 255, 255, 0.02);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: #71717a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 40px;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+
+.backBtn:hover { color: #fff; }
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #a1a1aa;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.9rem;
+}
+
+.navLink:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+.navLink.active { background: rgba(192, 132, 252, 0.12); color: #c084fc; font-weight: 500; }
+
+.dangerZoneNav {
+  color: #f87171;
+  background: none;
+  border: none;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.dangerZoneNav:hover { background: rgba(248, 113, 113, 0.1); }
+
+/* Main Content Styling */
+.mainContent {
+  flex: 1;
+  padding: 50px;
+  overflow-y: auto;
+}
+
+.sectionTitle { font-size: 1.6rem; margin-bottom: 30px; letter-spacing: -0.5px; color: #fff; }
+
+.label { display: block; color: #71717a; margin-bottom: 10px; font-size: 0.85rem; }
+
+.textInput {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 14px 18px;
+  color: #fff;
+  outline: none;
+}
+
+.textInput:focus { border-color: #c084fc; box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.1); }
+
+/* Visibility Cards */
+.visibilityGrid {
+  display: flex;
+  gap: 15px;
+}
+
+.visCard {
+  flex: 1;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.visIcon {
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #71717a;
+  transition: 0.3s;
+}
+
+.visText p { margin: 0; font-weight: 600; color: #fff; font-size: 0.95rem; }
+.visText span { font-size: 0.8rem; color: #71717a; }
+
+.activeVis {
+  background: rgba(192, 132, 252, 0.08);
+  border-color: #c084fc;
+}
+
+.activeVis .visIcon {
+  background: #c084fc;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
+}
+
+/* Update Button */
+.updateBtn {
+  margin-top: 32px;
+  background: #c084fc;
+  color: #fff;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 20px rgba(192, 132, 252, 0.2);
+}
+
+.updateBtn:hover {
+  background: #a855f7;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(192, 132, 252, 0.3);
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.97) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Invite Section */
+.inviteWrapper {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.inviteInputGroup {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 16px;
+  color: #52525b;
+}
+
+.inviteInput {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 14px 14px 14px 45px;
+  color: #fff;
+  outline: none;
+  transition: 0.2s;
+}
+
+.inviteInput:focus { border-color: #c084fc; }
+
+.inviteBtn {
+  background: #c084fc;
+  color: #fff;
+  border: none;
+  padding: 0 28px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.inviteBtn:hover { background: #a855f7; transform: translateY(-1px); }
+
+/* Collaborator List */
+.listLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #52525b;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.collabList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.collabItem {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px 16px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.2s;
+}
+
+.collabItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.userInfo { display: flex; align-items: center; gap: 14px; }
+
+.avatarSmall {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #3f3f46, #18181b);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #c084fc;
+}
+
+.userText p { margin: 0; font-size: 0.95rem; font-weight: 500; color: #fff; }
+.userText p span { font-size: 0.8rem; color: #71717a; font-weight: 400; margin-left: 4px; }
+.userText span { font-size: 0.8rem; color: #52525b; }
+
+.removeBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: #71717a;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.removeBtn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}

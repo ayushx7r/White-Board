@@ -148,3 +148,31 @@
 .footerText a:hover {
   text-decoration: underline;
 }
+
+.inputWrapper {
+  position: relative;
+  margin-bottom: 1.5rem; /* Increased to give the error space to breathe */
+}
+
+/* Reset margin on inputGroup since wrapper handles it now */
+.inputGroup {
+  margin-bottom: 0 !important;
+}
+
+.inlineError {
+  position: absolute;
+  left: 0.5rem;
+  bottom: -1.2rem; /* Positions it perfectly in the gap */
+  color: #ff8a8a; 
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: lowercase; /* Minimalist look */
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-5px); }
+  to { opacity: 0.8; transform: translateX(0); }
+}

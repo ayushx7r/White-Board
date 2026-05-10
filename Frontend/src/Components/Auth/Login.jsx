@@ -3,13 +3,37 @@ import classes from './Login.module.css';
 import { FcGoogle } from "react-icons/fc";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState();
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const url = 'http://localhost:3000/api/user/login'
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await fetch(url, {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        }, 
+        credentials : 'include',
+        body : JSON.stringify({email, password})
+      })
+      const data = await res.json();
+      if(!res.ok) throw Error(data.message);
+      navigate('/')
+      setEmail("");
+      setPassword("");
+    } catch(err) {
+      navigate('/login');
+      setError(err.message);
+    }
   };
 
   return (
@@ -30,35 +54,40 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleSubmit} className={classes.form}>
-          <div className={classes.inputGroup}>
-            <HiOutlineMail className={classes.inputIcon} />
-            <input 
-              type="email" 
-              placeholder="Email address" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required 
-            />
+          <div className={classes.inputWrapper}>
+            <div className={classes.inputGroup}>
+              <HiOutlineMail className={classes.inputIcon} />
+              <input 
+                type="email" 
+                placeholder="Email address" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required 
+              />
+            </div>
+            {error === "user" && <span className={classes.inlineError}>User not found</span>}
           </div>
-
-          <div className={classes.inputGroup}>
-            <HiOutlineLockClosed className={classes.inputIcon} />
-            <input 
-              type="password" 
-              placeholder="Password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required 
-            />
+          <div className={classes.inputWrapper}>
+            <div className={classes.inputGroup}>
+              <HiOutlineLockClosed className={classes.inputIcon} />
+              <input 
+                type="password" 
+                placeholder="Password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
+            </div>
+            {error === "password" && <span className={classes.inlineError}>Incorrect Password</span>}
+            
           </div>
-
           <button type="submit" className={classes.submitBtn}>
             Sign In
           </button>
         </form>
 
         <p className={classes.footerText}>
-          Don't have an account? <Link to={'/signup'}>Sign in</Link>
+          Don't have an account? <Link to={'/signup'}>Sign up</Link>
         </p>
       </div>
     </div>

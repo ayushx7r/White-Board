@@ -60,32 +60,28 @@
   margin: 0 4px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 910px) {
   .zoomContainer {
-    top: 12px;
-    left: 12px;
-    bottom: auto;
-    right: auto;
-    transform: none; 
-    padding: 4px 8px;
-    gap: 2px;
-    background: rgba(24, 24, 27, 0.9);
-    border-radius: 10px;
-    height: 36px;
-    width: auto;
-    display: flex;
-    align-items: center;
-    z-index: 110;
+    bottom: 92px;
+    right: 14px;
+    left: auto;
+    top: auto;
+    transform: none;
+    padding: 6px 10px;
+    gap: 6px;
+    border-radius: 14px;
+    height: auto;
   }
 
   .zoomContainer .actionBtn {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+    padding: 0;
   }
 
   .zoomText {
-    font-size: 11px;
-    min-width: 38px;
+    font-size: 12px;
+    min-width: 40px;
   }
 }

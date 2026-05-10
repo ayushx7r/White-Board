@@ -34,7 +34,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:3000/api/user/register";
+    const url = "https://zenithboard-api.onrender.com/api/user/register";
 
     try {
       const res = await fetch(url, {

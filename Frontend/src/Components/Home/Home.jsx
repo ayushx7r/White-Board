@@ -53,7 +53,7 @@ const Home = () => {
         setLoading(true);
 
         const response = await fetch(
-          "http://localhost:3000/api/canvas",
+          "https://zenithboard-api.onrender.com/api/canvas",
           {
             method: "GET",
             credentials: "include",
@@ -80,7 +80,7 @@ const Home = () => {
   const handleDeleteCanvas = async (canvasId) => {
     try {
       await axios.delete(
-        `http://localhost:3000/api/canvas/${canvasId}`,
+        `https://zenithboard-api.onrender.com/api/canvas/${canvasId}`,
         {
           withCredentials: true,
         }

@@ -9,7 +9,7 @@ const CreateCanvasModal = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     try {
-      const url = "http://localhost:3000/api/canvas"
+      const url = "https://zenithboard-api.onrender.com/api/canvas"
       const res = await fetch(url, {
         method : "POST",
         headers : {

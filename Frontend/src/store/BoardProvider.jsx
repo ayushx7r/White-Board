@@ -339,7 +339,7 @@ useEffect(() => {
   const fetchData = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/canvas/${params.canvasId}`,
+        `https://zenithboard-api.onrender.com/api/canvas/${params.canvasId}`,
         { credentials: "include" }
       );
 
@@ -374,7 +374,7 @@ useEffect(() => {
     if(!isHydrated.current) return;
 
     const serializedElements = serializeElements(boardState.elements);
-    await fetch(`http://localhost:3000/api/canvas/${params.canvasId}`, {
+    await fetch(`https://zenithboard-api.onrender.com/api/canvas/${params.canvasId}`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({elements : serializedElements}),
@@ -557,6 +557,7 @@ useEffect(() => {
       type: TOOL_ACTIONS.SET_CURR_STATE,
       payload: CURR_STATE.IDLE,
     });
+    console.log("blur");
 
     dispatchBoardState({
       type: TOOL_ACTIONS.TEXT_WRITE,

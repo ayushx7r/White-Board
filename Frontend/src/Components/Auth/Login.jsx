@@ -12,7 +12,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const url = 'http://localhost:3000/api/user/login'
+  const url = 'https://zenithboard-api.onrender.com/api/user/login'
 
   const handleSubmit = async (e) => {
     e.preventDefault();

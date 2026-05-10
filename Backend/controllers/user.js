@@ -21,7 +21,8 @@ export const handleLogin = async (req, res) => {
         const token = jwt.sign({id : user.id, name : user.name, email : user.email, username : user.username}, "KEY", {expiresIn : '1h'});
         res.cookie('token', token, {
             httpOnly : true,
-            sameSite: 'lax',
+            sameSite: 'None',
+            secure : true,
             maxAge : 1000 * 60 * 60
         });
         return res.status(202).json({token});

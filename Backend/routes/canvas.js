@@ -1,5 +1,4 @@
 import express from 'express'
-import { checkToken } from '../middlewares/authMiddleware.js';
 import { getCanvases, createCanvas, getCanvasElements, updateCanvasElements, deleteCanvas } from '../controllers/canvas.js';
 const router = express.Router();
 

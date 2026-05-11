@@ -454,7 +454,6 @@ useEffect(() => {
 
   const handleMouseDown = useCallback(
     (e) => {
-      if (e?.preventDefault) e.preventDefault();
       if (e.pointerType === "touch" && !e.isPrimary) return;
 
       const currentTime = Date.now();
@@ -465,6 +464,7 @@ useEffect(() => {
 
       if (e.pointerType === "touch") {
         if (timeDiff < 300) {
+          if (e?.preventDefault) e.preventDefault();
           initiateDrawing(e);
           return;
         }
@@ -480,6 +480,7 @@ useEffect(() => {
           return;
         }
 
+        if (e?.preventDefault) e.preventDefault();
         initiateDrawing(e);
       }
     },
@@ -488,10 +489,11 @@ useEffect(() => {
 
   const handleMouseMove = useCallback(
     (e) => {
-      if (e?.preventDefault) e.preventDefault();
       if (e.pointerType === "touch" && !e.isPrimary) return;
 
       if (boardState.currState === CURR_STATE.WRITING) return;
+
+      if (e?.preventDefault) e.preventDefault();
 
       const { clientX, clientY, movementX, movementY } = e;
 

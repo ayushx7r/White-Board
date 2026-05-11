@@ -153,7 +153,7 @@ export const checkSegmentsHit = (element, x, y, threshold) => {
         }
         case TOOLS.TEXT: {
             const lines = element.text.split("\n");
-            const fontSize = element.strokeWidth;
+            const fontSize = element.options.strokeWidth;
             const lineHeight = fontSize;
             
             const maxChars = Math.max(...lines.map(line => line.length));

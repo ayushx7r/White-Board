@@ -34,7 +34,7 @@ export const handleLogin = async (req, res) => {
 
 export const getUser = async (req, res) => {
     try {
-        if(!req.user.id) throw Error("user not found");
+        if(!req.user || !req.user.id) throw Error("user not found");
         const user = await User.findById(req.user.id);
         return user;
     } catch(err) {

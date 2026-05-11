@@ -21,10 +21,10 @@ const userSchema = new Schema({
         required : true,
         unique : true
     }, 
-    friends : {
+    friends : [{
         type : Schema.ObjectId,
         ref : "User"
-    }
+    }]
 })
 
 userSchema.statics.register = async function(name, username, password, email) {

@@ -7,6 +7,6 @@ export const checkToken = (req, res, next) => {
         req.user = user;
         next();
     } catch(err) {
-        return res.status(504).json({message : "Invalid or Expired token"});
+        return res.status(401).json({message : "Invalid or Expired token"});
     }
 }
